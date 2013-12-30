@@ -1,0 +1,26 @@
+<fieldset>
+  <legend>Reset Password</legend>
+  <%= display_note('password') %>
+	<%= form_for @user, html: {autocomplete: "off"}, :url => password_reset_path(params[:id]) do |f| %>
+	  <%= render 'shared/error_messages', object: f.object %>
+
+	 	<% if @forced %>
+		  <%= prewrap_form('user', 'Old_password','envelope') %>
+		  <%= password_field_tag :old_password, params[:old_password], :class => "passwordfield" %>
+		  <%= postwrap_form('Old password is required') %>
+	  <% end %>
+
+	  <%= prewrap_form('user', 'New_password','lock') %>
+	  <%= f.password_field :password, :class => "passwordfield", :id => 'user_new_password' %>
+	  <%= postwrap_form('New password is required') %>
+
+	  <%= prewrap_form('user', 'Password_confirmation','lock') %>
+	  <%= f.password_field :password_confirmation, :class => "passwordfield" %>
+	  <%= postwrap_form('New password confirmation must match password') %>
+
+	  <%= hidden_field(:user, :force_reset, :value => false) %>
+	  <div>
+	    <%= f.submit "Update Password", :class => "btn" %>
+	  </div>
+	<% end %>
+</fieldset>

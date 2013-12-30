@@ -1,0 +1,83 @@
+<fieldset>
+  <legend><%= (current_role(Graduate) ? 'Search' : 'Manage') %> Job Openings</legend>
+  <div class="row-fluid">
+    <% if current_role(Graduate) %>
+      <% span = "span8" %>
+      <div class="span2">
+        <fieldset class="nested-fieldset">
+          <legend class="nested-legend">
+            <i class="icon-fire icon-offset-half"></i>Top 5 Openings
+          </legend>
+            <ol class="small-text">
+              <% @top5openings.each do |top| %>
+                <li><%= link_to top.position, opening_path(top.id) %></li>
+              <% end %>
+            </ol>
+        </fieldset>
+        <fieldset class="nested-fieldset">
+          <legend class="nested-legend">
+            <i class="icon-folder-open icon-offset-half"></i> Saved Jobs (<%= @saved.count %>)
+          </legend>
+            <ul class="small-text">
+              <% if @saved.count > 0  %>
+                <% @saved.limit(5).each do |job| %>
+                  <li><%= link_to job.position, opening_path(job.id) %></li>
+                <% end %>
+                <% if @saved.count > 5 %>
+                  <i class="icon-list"></i> <%= link_to "More", "/saved", :class => 'more' %>
+                <% end %>
+              <% else %>
+                <li>None</li>
+              <% end %>
+            </ul>
+        </fieldset>
+        <fieldset class="nested-fieldset">
+          <legend class="nested-legend">
+            <i class="icon-heart icon-offset-half"></i> Favorite Employers (<%= @faved.count %>)
+          </legend>
+            <ul class="small-text">
+              <% if @faved.count > 0  %>
+                <% @faved.limit(5).each do |nonprofit| %>
+                  <li><%= link_to "#{nonprofit.company}", {:controller => 'nonprofits', :action => 'display', :id => "#{nonprofit.id}"} %></li>
+                <% end %>
+                <% if @faved.count > 5 %>
+                  <i class="icon-list"></i> <%= link_to "More", "/faved", :class => 'more' %>
+                <% end %>
+              <% else %>
+                <li>None</li>
+              <% end %>
+            </ul>
+        </fieldset>
+      </div>
+    <% else %>
+      <% span = "span10" %>
+    <% end %>
+    <div class="<%= span %>">
+      <fieldset class="nested-fieldset">
+        <legend class="nested-legend">Instructions</legend>
+          <%= display_note('filter') %>
+          <% if current_role(Nonprofit) %>
+            <div class="btn-group">
+              <%= link_to 'Create new opening', new_opening_path, :class => 'btn btn-primary' %>
+            </div>
+          <%   end %>
+          <%= render 'table', :openings => @openings %>
+          <% if current_role(Nonprofit) %>
+            <div class="btn-group">
+              <%= link_to 'Create new opening', new_opening_path, :class => 'btn btn-primary' %>
+            </div>
+          <% end %>
+          <% if !current_role(Graduate) %>
+            <%= display_note('date') %>
+          <% end %>
+      </fieldset>
+    </div>
+    <div class="span2">
+      <%= form_tag openings_path, :method => 'get' do %>
+        <%= render 'shared/search_filter', :interests => @interests, :selected_interests => @selected_interests %>
+      <% end %>
+    </div>
+  </div>
+</fieldset>
+
+<!-- optimized queries -->

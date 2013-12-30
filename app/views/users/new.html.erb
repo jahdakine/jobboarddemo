@@ -1,0 +1,41 @@
+<fieldset>
+  <legend>Register</legend>
+  <%= display_note('password') %>
+	<%= form_for @user do |f| %>
+	  <%= render 'shared/error_messages', object: f.object %>
+	  <%= prewrap_form('user', 'Email','envelope') %>
+	  <%= f.text_field :email, :placeholder => "jobseeker@example.com", :autofocus=>"autofocus" %>
+	  <%= postwrap_form('Email is required') %>
+	  <div class="control-group">
+	    <label class="control-label" for="user_password">Password</label>
+	    <div class="controls">
+	      <div class="input-prepend input-append">
+	        <span class="add-on"><i class="icon-lock"></i></span>
+	        <%= f.password_field :password %>
+	        <span class="add-on"><a href="#" title="Password is required" tabindex="-1"><i class="icon-asterisk"></i></a></span>
+	      </div>
+	    </div>
+	  </div>
+	  <div id="bars" class="progress-info left" style="margin-top: -20px;">
+	    <div id="bar" class="bar"></div>
+	  </div>
+	  <div style="margin-top: 30px;">
+	    <%= prewrap_form('user', 'Password_Confirmation','lock') %>
+	    <%= f.password_field :password_confirmation %>
+	    <%= postwrap_form('Password Confirmation must match password') %>
+	  </div>
+	  <label>
+	    <%= f.check_box :agreement, :class => "checkbox" %>
+	    <%= f.label :agreement, 'I agree to the terms of the <a href="/user_agreement" class="dialog">User Agreement</a> and <a href="/privacy_policy" class="dialog">Privacy Policy</a>.'.html_safe %>
+	  </label>
+	  <%= label_tag :vip, 'Leave this field blank', :class => 'hidden' %>
+	  <%= hidden_field_tag :vip %>
+	  <br><br>
+	  <div>
+	    <%= f.submit "Submit", :class => "btn" %>
+	  </div>
+	<% end %>
+  <div class="action-links">
+    Already registered? <%= link_to "Log In", new_session_path %>
+  </div>
+</fieldset>

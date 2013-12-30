@@ -1,0 +1,16 @@
+<fieldset>
+	<legend>New Job Opening</legend>
+	<% set_interest_cols(@interests) %>
+	<% set_path(@opening) %>
+	<%= render 'form',
+		:opening => @opening,
+		:nonprofit => @nonprofit,
+		:interests => @interests,
+		:sel => @selected_interests,
+		:span => @span,
+		:count => @count,
+		:num_in_cols => @num_in_cols,
+		:user_id => @user_id,
+		:return_path => @return_path
+	%>
+</fieldset>

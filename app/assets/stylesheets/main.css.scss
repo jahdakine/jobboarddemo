@@ -1,0 +1,376 @@
+/*********************************
+GENERAL
+*********************************/
+@font-face {
+    font-family: 'bebas_neueregular';
+    src: url('BebasNeue-webfont.eot');
+    src: url('BebasNeue-webfont.eot?#iefix') format('embedded-opentype'),
+         url('BebasNeue-webfont.woff') format('woff'),
+         url('BebasNeue-webfont.ttf') format('truetype'),
+         url('BebasNeue-webfont.svg#bebas_neueregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* debug: * { border: 1px solid red; } */
+
+html {
+  min-width: 600px;
+}
+body {
+  font-size: 16px;
+  min-width: 600px;
+}
+
+.clear {
+  float: none;
+  clear: both;
+}
+
+fieldset {
+}
+
+.nested-fieldset {
+  margin-top: 1em;
+}
+
+legend {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.header-adjust{
+  .margin-top: 8em;
+}
+
+.icon-offset {
+  margin-top: 8px !important;
+}
+
+.icon-offset-half {
+  margin-top: 4px !important;
+}
+
+.nested-legend {
+  font-size: 16px;
+}
+
+.red {
+  color: red;
+}
+
+.lightred {
+  color: rgb(210,98,93);
+}
+
+.left {
+  float:left;
+}
+
+.right {
+  float:right;
+}
+
+#spacer {
+  margin-top:8em;
+}
+
+.hidden {
+  display: none;
+}
+
+.link2btn {
+  line-height: 17px;
+}
+
+.center {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.small-text {
+  font-size: 80%;
+}
+
+.foot-filter {
+  font-size: 14px;
+  font-weight: normal !important;
+}
+
+.more {
+  font-style:italic;font-size:85%;
+}
+
+/*********************************
+HEADER
+*********************************/
+header {
+	background-color: #eee;
+}
+
+#banner {
+  font-family: 'bebas_neueregular';
+  padding-top: 1em;
+	text-align: center;
+	font-size: 50px;
+	font-weight: bold;
+  vertical-align: middle !important;
+  color: #FFF;
+}
+
+/*Welcome {user} {role} */
+#status {
+	float: left;
+	font-size: 14px;
+  margin: 1em;
+  padding-left: 0.5em;
+}
+
+.openings-header {
+  background: #ccc;
+  margin: 5px 0 -7px 0;
+  padding: 6px;
+  border-radius: 4px 4px 0 0 ;
+}
+
+/*********************************
+FOOTER
+*********************************/
+#footer {
+  background-color:#eee;
+  padding:1em;
+  margin-top: 1em;
+  text-align: center;
+  font-size: 14px;
+  width: 100%;
+}
+
+/*********************************
+FORMS
+*********************************/
+label {
+  font-weight: bold;
+}
+.list-label {
+  font-weight: normal;
+}
+.field {
+  margin-bottom: 0.5em;
+}
+
+/*Text Fields*/
+.textfield {
+  width: 180px;
+}
+  /*Opening - position*/
+  #opening-position {
+    width: 500px;
+  }
+  /*NP Profile - company*/
+  #np-company {
+    width: 500px;
+  }
+  /*Grad Profile*/
+  #grad-first {
+    width: 125px;
+  }
+  #grad-last {
+    width: 125px;
+  }
+  #grad-addr1 {
+    width: 250px;
+  }
+  #grad-addr2 {
+    width: 250px;
+  }
+  #grad-city {
+    width: 125px;
+  }
+  #grad-state {
+    width: 125px;
+  }
+  #grad-zip {
+    width: 75px;
+  }  
+  #grad-phone {
+    width: 175px;
+  }  
+
+/*Text Areas*/
+.textarea {
+  padding: 0.5em;
+}
+  /*Opening - description*/
+  #opening-desc {
+    width: 500px;
+    height: 250px;
+  }
+  /*NP profile - description*/
+  #np-desc {
+    width: 500px;
+    height: 250px;
+  }
+  /*Grad profile - experience*/
+  #grad-v-exp {
+    width: 500px;
+    height: 250px;
+  }
+  #grad-w-exp {
+    width: 500px;
+    height: 250px;
+  }
+
+/*Checkboxes*/
+.checkbox {
+}
+  /*Opening - active*/
+  #opening-active {
+  }
+  /*NP profile - skip*/
+  #np-skip {
+  }
+  /*Grad profile - skip*/
+  #grad-skip {
+  }
+
+/*Date Pickers*/
+.datepicker {
+  width: 100px;
+}
+  /*Opening - date open, date closed*/
+  #opening-open {
+  }
+  #opening-closed {
+  } 
+
+/*Buttons*/
+.button {
+  margin-top: 0.5em;
+}
+
+/*Password Fields*/
+.passwordfield {
+  width: 180px;
+}
+  /*Password Reset - old, new, confirm*/
+  reset_old {
+  }
+  reset_new {
+  }
+  reset_confirm {
+  }
+
+/*********************************
+ERRORS/NOTICES
+*********************************/
+/*Flash Notices*/
+.flash {
+  margin: 0 auto;
+  text-align:center;
+  padding: 0.5em;
+}
+#notice {
+  color: green;
+  background-color: #B8D9BD;
+}
+#alert {
+  color: red;
+  background-color: #FFBABA;
+}
+/*Form errors*/
+.field_with_errors {
+  background-color: #FFBABA;
+}
+#error_explanation {
+  color: red;
+  border-radius: 4px;
+  border: 2px solid red;
+  padding: 7px;
+  padding-bottom: 0;
+  margin-bottom: 20px;
+  .alert{
+    color:red;
+    background-color: #FFBABA;
+  }
+  ul li {
+    font-size: 12px;
+    list-style: none;
+  }
+}
+
+/*********************************
+NOTES
+*********************************/
+.info {
+  font-size: 14px;
+  font-style: italic;
+}
+
+/*********************************
+LINKS
+*********************************/
+/*create new links*/
+.new-link {
+  color: #0068B7;
+}
+/*action buttons in tables*/
+
+input#show.table-action {
+  color: white;
+  background: #005CCC;
+}
+input#edit.table-action {
+    color: white;
+    background: #FBB553;
+}
+input#delete.table-action{
+    color: white;
+    background: rgb(208,70,64);
+}
+/*admin menu*/
+.menu-action-link {
+}
+/*list of links after fieldsets*/
+.action-links {
+  font-size: 14px;
+  ul {
+    margin: 0.5em;
+    padding: 0;
+    list-style: none;  
+  }
+  li {
+    display: inline;
+    padding-right: 5px; 
+  }
+}
+/*Log in, Log out, etc*/
+.header-links {
+  float: right;
+  font-size: 14px;
+  padding-right: 0.5em;
+  ul {
+    margin-top: 1em;
+    padding: 0;
+    list-style: none;
+  }
+  li {
+    display: inline;
+    padding-left: 5px;
+  }
+}
+/*EULA, PP, etc*/
+.footer-links {
+  font-size: 14px;
+  ul {
+    margin: 0 !important;
+    padding: 0;
+    list-style: none;
+  }
+  li {
+    display: inline;
+    padding-left: 5px;
+  }
+}
+.ui-dialog-titlebar-close {
+  visibility: hidden;
+}

@@ -1,0 +1,71 @@
+<script type="text/javascript" charset="utf-8">
+  function fillAddr(){
+    $("#opening-city").val($("#opening-city-profile").text());
+    $("#opening-state").val($("#opening-state-profile").text());
+    $("#opening-zip_code").val($("#opening-zip_code-profile").text());
+    preventDefault();
+  }
+</script>
+
+<%= form_for(opening) do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+  <%= prewrap_form('opening', 'Position','briefcase') %>
+  <%= f.text_field :position, :class => "textfield" %>
+  <%= postwrap_form('Position is required') %>
+
+  <%= prewrap_form('opening', 'City','map-marker', 'left') %>
+  <%= f.text_field :city, :class => "textfield", :id => "opening-city" %>
+  <%= postwrap_form('City is required') %>
+  <span id="opening-city-profile" class="hidden"><%= nonprofit.city %></span>
+
+  <%= prewrap_form('opening', 'State','map-marker', 'left') %>
+  <%= f.text_field :state, :class => "textfield", :id => "opening-state" %>
+  <%= postwrap_form('State is required') %>
+  <span id="opening-state-profile" class="hidden"><%= nonprofit.state %></span>
+
+  <%= prewrap_form('opening', 'Zip Code','map-marker', 'left') %>
+  <%= f.text_field :zip_code, :class => "textfield", :id => "opening-zip_code" %>
+  <%= postwrap_form('Zip Code is required') %>
+  <span id="opening-zip_code-profile" class="hidden"><%= nonprofit.zip_code %></span>
+
+  <br>
+  <%= button_to_function "Use Profile Address", 'fillAddr()', :class => "btn link2btn" %>
+  <br class="clear">
+
+  <label>
+    <%= f.label :description %>&nbsp;<span class="add-on"><a href="#" title="Description is required"><i class="icon-asterisk"></i></a></span>
+  </label>
+  <div class="field">
+    <%= f.text_area :description, :class => "textarea tinymce" %>
+  </div>
+  <%= prewrap_form('opening', 'Date open','calendar') %>
+  <%= f.text_field :date_open, :class => "datepicker", id: 'opening_date_open' %>
+  <%= postwrap_form('Date open is required') %>
+  <%= prewrap_form('opening', 'Date closed','calendar') %>
+  <%= f.text_field :date_closed, :class => "datepicker", id: 'opening_date_closed' %>
+  <span class="add-on"><a href="#" title="Leaving blank will display 'Ongoing'"><i class="icon-question-sign"></i></a></span></div></div></div>
+  <label>
+    <%= f.check_box :active, :class => "checkbox" %>
+    <%= f.label(:active) %>&nbsp;<span class="add-on"><a href="#" title="Must be checked to show in published list"><i class="icon-question-sign"></i></a></span>
+  </label>
+  <fieldset class="nested-fieldset"><legend class="nested-legend">Categories&nbsp;<span class="add-on"><a href="#" title="Choose all that apply"><i class="icon-question-sign"></i></a></span></legend>
+    <div class="row-fluid">
+      <div class="<%= span %>">
+        <% interests.each do |interest| %>
+          <% count += 1 %>
+          <%= check_box_tag "opening[interest_ids][]", interest.id, sel.include?(interest.id.to_s), :id => dom_id(interest) %>
+          <%= label_tag dom_id(interest), interest.name, :class => 'list-label' %><br>
+          <% if count % num_in_cols == 0 %></div><div class="<%= span %>"><% end %>
+        <% end %>
+      </div>
+    </div>
+  </fieldset>
+  <%= hidden_field(:opening, :nonprofit_id, :value => user_id) %>
+  <br>
+  <div class="btn-group">
+    <%= f.submit "Save changes", :class => "btn", id: 'opening-submit' %>
+    <%= link_to 'Cancel', return_path, :class => "btn btn-inverse link2btn", id: 'opening-cancel' %>
+  </div>
+<% end %>
+
+<!-- optimized queries -->

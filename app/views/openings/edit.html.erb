@@ -1,0 +1,22 @@
+<fieldset>
+	<legend>Editing Job Opening</legend>
+	<p class="info">
+		Instructions: The description field should contain information so that job seekers can contact your organization.
+	</p>
+	<% set_interest_cols(@interests) %>
+	<% set_path(@opening) %>
+	<%= render 'form',
+		:opening => @opening,
+		:nonprofit => @nonprofit,
+		:interests => @interests,
+		:sel => @selected_interests,
+		:span => @span,
+		:count => @count,
+		:num_in_cols => @num_in_cols,
+		:user_id => @user_id,
+		:return_path => @return_path
+	%>
+	<p class="info">
+    NOTE: This job opening will only appear in search listings if the date open is not in the future, the date closed is not in the past, and active is set to true.
+  </p>
+</fieldset>

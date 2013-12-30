@@ -1,0 +1,58 @@
+<fieldset>
+  <legend>Administration Menu</legend>
+
+
+  <ul class="nav nav-list">
+    <li>
+      <p class="info">
+        Instructions: This area is for adminstration of the <%= APPNAME %>.
+        To add new Employer users to the system, use the Invite Employer or Manage Employers link.
+        Take care when editing or deleting users. Typically, editing should be left to the user.
+        Deleting users may be justified if they are not active in the system.
+        Use the Manage Registrations link to view the current state of all users.
+      </p>
+    </li>
+    <li>
+      <a autofocus="autofocus" href="<%= new_nonprofit_path %>" title="Pre-register and send an invitation to a Employer organization to sign up.">
+        <i class="icon-star-empty"></i>
+        Invite Employer
+      </a>
+    </li>
+    <li>
+      <a href="<%= nonprofits_path %>" title="Create, edit and delete Employer users.">
+        <i class="icon-star"></i>
+        Manage Employers/Openings
+      </a>
+    </li>
+    <li>
+      <a href="<%= users_path %>" title="Purge dropouts, send reminders, etc.">
+        <i class="icon-user"></i>
+        Manage Registrations
+      </a>
+    </li>
+    <li>
+      <a href="<%= interests_path %>" title="Create, edit and delete Interests that users associate themselves with and that openings are categorized as.">
+        <i class="icon-tags"></i>
+        Manage Interests/Categories
+      </a>
+    </li>
+    <li class="divider"></li>
+    <li>
+      <p class="info">
+        NOTE: These processes run automatically. Use these links to run them immediately.
+      </p>
+    </li>
+    <li>
+      <a href="<%= close_path %>" title="Remove all closed openings immediately">
+        <i class="icon-wrench"></i>
+        Remove closed openings (runs nightly at 1:00 AM)
+      </a>
+    </li>
+    <li>
+      <a href="<%= purge_path %>" title="Remove all registered users without complete profiles immediately">
+      <i class='icon-wrench'></i>
+        Remove all registered users without complete profiles immediately (runs nightly at 1:30 AM, only on registrations over a month old)
+      </a>
+    </li>
+  </ul>
+</fieldset>

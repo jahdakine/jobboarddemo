@@ -1,0 +1,78 @@
+<fieldset>
+  <legend>Manage Registrations <i class="icon-user icon-offset"></i></legend>
+  <%= display_note('users') %>
+  <div class="btn-group">
+    <%= link_to 'Return to menu', admins_path, :class => 'btn btn-info' %>
+  </div>
+  <table class="datatables" id="dt-users">
+    <thead>
+      <tr>
+        <th></th>
+        <th>ID</th>
+        <th>Email</th>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Registered</th>
+        <th>Profile Updated</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @users.each do |user| %>
+        <% setup_users(user) %>
+        <tr>
+          <div class="btn-group btn-group-xs">
+            <td>
+              <% if @admin == "Administrator" %>
+                <%= mail_to "super_user@perl.com?subject=Delete request Admin ID: #{user.id} - #{user.email}", 'Delete', :class => "btn btn-mini btn-primary", :title => 'Send email request to superuser to delete this Admin', data: { confirm: 'Deleting an admin can only be performed by a superuser. Send delete request?' } %>
+              <% elsif !@blank %>
+                <%= link_to 'Delete', user, method: :delete, :class => "btn btn-mini btn-danger", data: { confirm: "STRONG WARNING: Deleting users with profiles could cause confusion and mistrust of the system. #{@extra}\n\nAre you sure? This action cannot be undone." } %>
+              <% else %>
+                <%= link_to 'Delete', user, method: :delete, :class => "btn btn-mini", data: { confirm: "WARNING: Deleting users could cause confusion and mistrust of the system.\n\nAre you sure? This action cannot be undone." } %>
+              <% end %>
+            </td>
+          </div>
+          <td><%= user.id %></td>
+          <td><%= user.email %></td>
+          <td><%= role(user.role_type) %></td>
+          <td>
+            <% if user.role_type == 'Graduate' %>
+              <%= (!@blank ? full_name(user.role) : "<span class='#{@mark}'>Incomplete profile</span>".html_safe ) %>
+            <% elsif user.role_type == 'Nonprofit' %>
+              <%= (!@blank ? user.role.company : "<span class='#{@mark}'>Incomplete profile</span>".html_safe ) %>
+            <% elsif user.role_type == 'Admin' %>
+              <%= @admin %>
+            <% end %>
+          </td>
+          <td><%= user.created_at.strftime('%m/%d/%Y') %></td>
+          <td>
+            <% if user.role_type != 'Admin' %>
+              <%= @blank ? "<span class='#{@mark}'>Never</span>".html_safe : user.updated_at.strftime('%m/%d/%Y %I:%m %p') %>
+            <% else %>
+              <%= user.updated_at.strftime('%m/%d/%Y %I:%m %p') %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+    <tfoot>
+      <tr>
+        <th></th>
+        <th>ID filter</th>
+        <th>Email filter</th>
+        <th>Type filter</th>
+        <th>Name filter</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </tfoot>
+  </table>
+  <div class="btn-group">
+    <%= link_to 'Return to menu', admins_path, :class => 'btn btn-info' %>
+  </div>
+  <div class="right">
+    <a href="javascript: window.location.reload()", class ="btn">Clear filter(s)</a>
+  </div>
+  <%= display_note('dropouts') %>
+</fieldset>
+
+<!-- optimized queries -->

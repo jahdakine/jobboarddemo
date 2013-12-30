@@ -1,0 +1,48 @@
+<fieldset>
+  <legend>Search Job Seekers</legend>
+  <div class="row-fluid">
+    <div class="span10">
+      <fieldset class="nested-fieldset">
+        <legend class="nested-legend">Instructions</legend>
+        <%= display_note('filter') %>
+        <table class="datatables" id="dt-graduates">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Date Registered</th>
+              <th>Last Updated</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @graduates.each do |graduate| %>
+              <tr>
+                <td>
+                  <%= link_to "#{full_name(graduate)}", graduate, :title => "View Job Seeker Profile" %>
+                </td>
+                <td><%= mail_to "#{graduate.user_email}", graduate.user_email, :title => "Send email" %></td>
+                <td><%= graduate.user_created_at.strftime('%m/%d/%Y') %></td>
+                <td><%= graduate.user_updated_at.strftime('%m/%d/%Y %I:%M %p') %></td>
+              </tr>
+            <% end %>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th>Name filter</th>
+              <th>Email filter</th>
+              <th></th>
+              <th></th>
+            </tr>
+          </tfoot>
+        </table>
+      </fieldset>
+    </div>
+    <div class="span2">
+      <%= form_tag graduates_path, :method => 'get' do %>
+        <%= render 'shared/search_filter', :interests => @interests, :selected_interests => @selected_interests %>
+      <% end %>
+    </div>
+  </div>
+</fieldset>
+
+<!-- optimized queries -->

@@ -1,0 +1,32 @@
+<fieldset>
+	<legend><%= display_full_name %></legend>
+	<div>
+		<%= display_formatted_address %>
+		<%= display_phone %>
+		Email: <%= mail_to @graduate.user_email, @graduate.user_email %>
+	</div>
+	<br>
+	</fieldset>
+	<fieldset class="nested-fieldset"><legend class="nested-legend">Volunteer Experience</legend>
+		<div>
+			<%= sanitized(@graduate.volunteer_experience)	%>
+		</div>
+	</fieldset>
+	<fieldset class="nested-fieldset"><legend class="nested-legend">Work Experience</legend>
+		<div>
+			<%= sanitized(@graduate.work_experience) %>
+		</div>
+	</fieldset>
+	<fieldset class="nested-fieldset"><legend class="nested-legend"><%= "Interest".pluralize(@graduate.interests.size) %></legend>
+		<div>
+			<%= render '/shared/int_cat_chosen', :obj => @graduate %>
+		</div>
+	</fieldset>
+	<br>
+	<div class="action-links">
+		<% (session[:last_search] ? back = session[:last_search] : back = openings_path) %>
+		<%= link_to 'Return to listing', back, :class => 'btn' %>
+	</div>
+</fieldset>
+
+<!-- optimized queries -->

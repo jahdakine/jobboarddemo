@@ -1,0 +1,22 @@
+<fieldset>
+  <legend>Reset Password Request</legend>
+  <!-- CHANGE: Need verbiage -->
+  <p class="info">
+  	Instructions: An email will be sent to the matching address on file with
+  	instructions on how to reset your password.
+  	Please allow 2-4 hours for delivery.
+  	If you do not receive a notification in this time frame check your spam
+  	folder or try again.
+  </p>
+	<%= form_tag password_resets_path, :method => :post do %>
+	  <%= prewrap_form('', 'Email','envelope') %>
+	  <%= text_field_tag :email, params[:email], :placeholder => "jobseeker@example.com", :autofocus=>"autofocus" %>
+	  <%= postwrap_form('Email is required') %>
+	  <%= label_tag :vip, 'Leave this field blank', :class => 'hidden' %>
+	  <%= hidden_field_tag :vip %>
+	  <div class="btn-group">
+	  	<%= submit_tag "Submit", :class => "btn", id: 'request-submit' %>
+	  	<%= link_to "Cancel", login_path, :class => "btn link2btn btn-inverse", id: 'request-cancel' %>
+	 	</div>
+	<% end %>
+</fieldset>

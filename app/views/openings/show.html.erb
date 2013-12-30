@@ -1,0 +1,53 @@
+<fieldset>
+	<legend>
+		<% if !current_role(Admin) %>
+			<%= link_to "#{@opening.nonprofit_company} - #{@opening.city}, #{@opening.state}", {:controller => 'nonprofits', :action => "#{(current_role(Graduate) ? 'display' : 'edit')}", :id => "#{@opening.nonprofit_id}"}, :class => "legend-link"%>
+		<% else %>
+			<%= @opening.nonprofit_company %>
+		<% end %>
+	</legend>
+	<h2>Position:
+		<%= @opening.position %>
+		<%= '<span class="red"> - (Closed)</span>'.html_safe if @opening.date_closed && @opening.date_closed < Time.zone.now %>
+	</h2>
+	<p>
+		<%= sanitized(@opening.description)	%>
+	</p>
+	<div>
+		<strong>Open</strong>: <%= @opening.date_open.strftime('%m/%d/%Y') %> -
+		<strong>Closed</strong>:
+		<%= @opening.date_closed ? @opening.date_closed.strftime('%m/%d/%Y') : "Ongoing" %>
+	</div>
+	<br>
+	<div><%= "Category".pluralize(@opening.interests.size) %>:</div>
+	<div>
+		<%= render '/shared/int_cat_chosen', :obj => @opening %>
+	</div>
+	<% if !current_role(Graduate) %>
+		<div>
+			<span>Active</span>: <%= (@opening.active? ? "Yes" : "No") %>
+		</div>
+	<% end %>
+	<br>
+	<div class="btn-group">
+		<%= render '/shared/create_io_button', :role => Nonprofit %>
+		<% if current_role(Admin) %>
+			<%= link_to 'Return to Employer',
+				nonprofit_path(@opening.nonprofit.id), :class => 'btn btn-inverse'
+			%>
+			<%= link_to 'Return to listing', nonprofits_path, :class => 'btn btn-info' %>
+		<% else %>
+			<% (session[:last_search] ? back = session[:last_search] : back = openings_path) %>
+			<%= link_to 'Return to listing', back, :class => 'btn' %>
+		<% end %>
+		<% if !current_role(Graduate) %>
+			<%= link_to 'Edit', edit_opening_path(@opening), :class => 'btn btn-warning' %>
+		<% end %>
+
+		<% if current_role(Graduate) %>
+			<%= render '/shared/set_fs_button_group', :obj => @opening, :sel => @selected_applications %>
+		<% end %>
+	</div>
+</fieldset>
+
+<!-- optimized queries -->

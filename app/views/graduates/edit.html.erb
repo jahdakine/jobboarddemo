@@ -1,0 +1,96 @@
+<fieldset>
+	<legend>Update Profile</legend>
+	<%= display_note('agree') %>
+	<%= form_for(@graduate) do |f| %>
+	  <%= render 'shared/error_messages', object: f.object %>
+
+	  <%= prewrap_form('graduate', 'First Name', 'user', 'left') %>
+	  <%= f.text_field :first_name, :class=>"form-control", :id=>"grad-first", :placeholder=>"First name", :autofocus=>"autofocus" %>
+	  <%= postwrap_form('First Name is required') %>
+
+	  <%= prewrap_form('graduate', 'Last Name','user', 'left') %>
+	  <%= f.text_field :last_name, :class=>"textfield", :id=>"grad-last" %>
+	  <%= postwrap_form('Last Name is required') %>
+
+	  <br class="clear">
+
+	  <%= prewrap_form('graduate', 'Address 1','home') %>
+	  <%= f.text_field :address_1, :class=>"textfield", :id=>"grad-addr1" %>
+	  <%= postwrap_form('') %>
+
+	  <%= prewrap_form('graduate', 'Address 2','home') %>
+	  <%= f.text_field :address_2, :class=>"textfield", :id=>"grad-addr2" %>
+	  <%= postwrap_form('') %>
+
+	  <%= prewrap_form('graduate', 'City','home', 'left') %>
+	  <%= f.text_field :city, :class=>"textfield", :id=>"grad-city" %>
+	  <%= postwrap_form('') %>
+
+	  <%= prewrap_form('graduate', 'State','home', 'left') %>
+	  <%= f.text_field :state, :class=>"textfield", :id=>"grad-state" %>
+	  <%= postwrap_form('') %>
+
+	  <%= prewrap_form('graduate', 'Zip Code','home', 'left') %>
+	  <%= f.text_field :zip_code, :class=>"textfield", :id=>"grad-zip" %>
+	  <%= postwrap_form('') %>
+
+	  <br class="clear">
+
+	  <%= prewrap_form('graduate', 'Phone','bell') %>
+	  <%= f.text_field :phone, :class=>"textfield", :id=>"grad-phone" %>
+	  <%= postwrap_form('Phone is required') %>
+
+	  <label>
+	    <%= f.label :volunteer_experience %>&nbsp;<span class="add-on"><a href="#" title="Volunteer Experience is required" tabindex="-1"><i class="icon-asterisk"></i></a></span>
+	  </label>
+	  <div class="field">
+	    <%= f.text_area :volunteer_experience, :class=>"textarea tinymce" %>
+	  </div>
+	  <label>
+	    <%= f.label :work_experience %>&nbsp;<span class="add-on"><a href="#" title="Work Experience is required" tabindex="-1"><i class="icon-asterisk"></i></a></span>
+	  </label>
+	  <div class="field">
+	    <%= f.text_area :work_experience, :class=>"textarea tinymce" %>
+	  </div>
+	  <fieldset id="grad-interests" class="nested-fieldset"><legend class="nested-legend">Interests&nbsp;<span class="add-on"><a href="#" title="Choose all that apply" tabindex="-1"><i class="icon-question-sign"></i></a></span></legend>
+	    <% set_interest_cols(@interests) %>
+	    <div class="row-fluid">
+	      <div class="<%= @span %>">
+	        <% @interests.each do |interest| %>
+	          <% @count += 1 %>
+	          <%= check_box_tag "graduate[interest_ids][]", interest.id, @selected_interests.include?(interest.id.to_s), :id=>dom_id(interest) %>
+	          <%= label_tag dom_id(interest), interest.name, :class=>'list-label' %><br>
+	          <% if @count % @num_in_cols == 0 %></div><div class="<%= @span %>"><% end %>
+	        <% end %>
+	      </div>
+	    </div>
+	  </fieldset>
+	  <fieldset id="grad-privacy" class="nested-fieldset"><legend class="nested-legend">Privacy Settings (Not yet implemented)</legend>
+	    <%= display_note('privacy')%>
+	    <div class="field">
+	      <%= check_box_tag :profile_private, :class=>"checkbox", :id=>'profile_private' %>
+	      <%= label_tag :profile_private, "Keep my profile information private", :class=>'list-label' %>
+	    </div>
+	    <div class="field">
+	      <%= check_box_tag :saved_private, :class=>"checkbox", :id=>'saved_private' %>
+	      <%= label_tag :saved_private, "Keep my saved jobs private", :class=>'list-label' %>
+	    </div>
+	  </fieldset>
+		<fieldset id="grad-settings" class="nested-fieldset"><legend class="nested-legend">Default Preferences (Not yet implemented)</legend>
+	    <div class="field">
+	    	<%= label_tag :def_rows, "Number of rows to show in table listings", :class=>'list-label' %><br>
+				<%= select_tag :def_rows, options_for_select(TABLE_ROWS), :style=>'width:75px;' %>
+	    </div>
+	  </fieldset>
+	  <hr>
+	  <div class="field">
+	    <%= f.check_box :skip, :class=>"checkbox", :id=>'skip' %>
+	    <%= label_tag :skip, "Skip this next time" %>&nbsp;<span class="add-on"><a href="#" title="Go directly to Search Openings after logging in." tabindex="-1"><i class="icon-question-sign"></i></a></span>
+	  </div>
+	  <div>
+	    <%= f.submit "Save changes", :class=>"btn", :id=>'grad-submit' %>
+	  </div>
+	<% end %>
+</fieldset>
+
+<!-- optimized queries -->

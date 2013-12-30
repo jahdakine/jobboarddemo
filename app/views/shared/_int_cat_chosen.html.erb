@@ -1,0 +1,10 @@
+<% if obj.interests.size == 0 %>
+	<div>No <%= (obj.class.name == 'Opening' ? 'category assigned' : 'interest chosen') %> </div>
+	<br>
+<% else %>
+	<ul>
+	<% for interest in obj.interests %>
+		<li><%= interest.name %></li>
+	<% end %>
+	</ul>
+<% end %>

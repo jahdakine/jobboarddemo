@@ -1,0 +1,8 @@
+<% if current_role(role) %>
+  <% if referrer('action') == 'new' %>
+    <%= link_to 'Create another', (params[:controller] == 'openings' ? new_opening_path : new_interest_path), :class => 'btn btn-primary' %>
+  <% end %>
+<% end %>
+<% if params[:controller] == 'interests' %>
+	<%= link_to 'Return to listing', interests_path, :class => 'btn btn-info' %>
+<% end %>

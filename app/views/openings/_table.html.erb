@@ -1,0 +1,76 @@
+  <% (current_role(Graduate) ? id = 'dt-openings-grad' : id = 'dt-openings') %>
+  <table class="datatables" id="<%= id %>">
+  <thead>
+    <tr>
+      <% if !current_role(Graduate) %>
+        <th>&nbsp;</th>
+      <% end %>
+      <% if current_role(Nonprofit) %>
+        <th>ID</th>
+        <th>Active?</th>
+      <% end %>
+      <th>Position</th>
+      <% if current_role(Graduate) %>
+        <th>City</th>
+        <th>State</th>
+        <th>Company</th>
+      <% end %>
+      <th>Date Open</th>
+      <th>Date Closed</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% openings.each do |opening| %>
+      <tr>
+        <% if !current_role(Graduate) %>
+          <td>
+            <%= set_opening_actions_button_group(opening) %>
+          </td>
+        <% end %>
+        <% if current_role(Nonprofit) %>
+          <td><%= opening.id %></td>
+          <td><%= opening.active ? 'Yes' : "<span class='red'>No</span>".html_safe %></td>
+        <% end %>
+        <% if current_role(Graduate) %>
+          <td>
+            <%= link_to "#{truncate(sanitized(opening.position), length: 35)}", {:controller => 'openings', :action => 'show', :id => "#{opening.id}"} %>
+          </td>
+          <td>
+            <%= opening.city %>
+          </td>
+          <td>
+            <%= opening.state %>
+          </td>
+        <% else %>
+          <td>
+            <%= truncate(sanitized(opening.position), length: 35) %> - <%= opening.city %>, <%= opening.state %>
+          </td>
+        <% end %>
+        <% if current_role(Graduate) %>
+          <td><%= link_to "#{truncate(opening.company, :length => 35)}", {:controller => 'nonprofits', :action => 'display', :id => "#{opening.nid}"} %>
+        <% end %>
+        <td><%= display_open_date(opening) %></td>
+        <td><%= display_closed_date(opening) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+  <tfoot>
+    <tr>
+      <% if !current_role(Graduate) %>
+        <th class="foot-filter"></th>
+      <% end %>
+      <% if current_role(Nonprofit) %>
+        <th class="foot-filter">ID filter</th>
+        <th class="foot-filter">Active filter</th>
+      <% end %>
+      <th class="foot-filter">Position filter</th>
+      <% if current_role(Graduate) %>
+        <th class="foot-filter">City filter</th>
+        <th class="foot-filter">State filter</th>
+        <th class="foot-filter">Company filter</th>
+      <% end %>
+      <th class="foot-filter"></th>
+      <th class="foot-filter"></th>
+    </tr>
+  </tfoot>
+</table>

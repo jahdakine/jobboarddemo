@@ -1,0 +1,65 @@
+<fieldset>
+  <legend>Manage Interests/Categories <i class="icon-tags icon-offset"></i></legend>
+  <%= display_note('interests') %>
+  <div class="btn-group">
+    <%= link_to 'Create new interest', new_interest_path, :class => 'btn btn-primary' %>
+    <%= link_to 'Return to menu', admins_path, :class => 'btn btn-info' %>
+  </div>
+  <br>
+  <table class="datatables" id="dt-interests">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Interest/Category</th>
+        <th>Job Seekers</th>
+        <th>Openings</th>
+        <th>Created</th>
+        <th>Last Updated</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @interests.each do |interest| %>
+        <tr>
+          <td>
+            <div class="btn-group btn-group-xs">
+              <%= link_to 'Show', interest, :class => "btn btn-mini btn-success" %>
+              <% if interest.graduates_count > 0 || interest.openings_count > 0 %>
+                <% warn = 'STRONG WARNING: Deleting or editing interests/categories associated with job seekers or job openings could cause confusion. ' %>
+                <% btn_type = 'btn-danger' %>
+              <% else %>
+                <% warn = 'This interest/category is not assigned, but deleting or editing could still cause confusion.' %>
+                <% btn_type = '' %>
+              <% end %>
+              <%= link_to 'Edit', edit_interest_path(interest), :class => "btn btn-mini btn-warning", data: { confirm: "#{warn}\n\nAre you sure?" }  %>
+              <%= link_to 'Delete', interest, method: :delete, :class => "btn btn-mini #{btn_type}", data: { confirm: "#{warn}\n\nAre you sure? This action cannot be undone." } %>
+            </div>
+          </td>
+          <td><%= interest.name %></td>
+          <td><span class="badge <%= (interest.graduates_count > 0 ? 'badge-info' : 'badge') %>"><%= interest.graduates_count %></span></td>
+          <td><span class="badge <%= (interest.openings_count > 0 ? 'badge-info' : 'badge') %>"><%= interest.openings_count %></span></td>
+          <td><%= interest.created_at.strftime('%m/%d/%Y') %></td>
+          <td><%= interest.updated_at.strftime('%m/%d/%Y %I:%M %p') %></td>
+        </tr>
+      <% end %>
+    </tbody>
+    <tfoot>
+      <tr>
+        <th></th>
+        <th>Interest/Category filter</th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </tfoot>
+  </table>
+  <div class="btn-group">
+    <%= link_to 'Create new interest', new_interest_path, :class => 'btn btn-primary' %>
+    <%= link_to 'Return to menu', admins_path, :class => 'btn btn-info' %>
+  </div>
+  <div class="right">
+    <a href="javascript: window.location.reload()", class ="btn right">Clear filter(s)</a>
+  </div>
+</fieldset>
+
+<!-- optimized queries -->

@@ -1,0 +1,44 @@
+<fieldset>
+<legend>Log In</legend>
+  <%= display_note('password') %>
+	<%= form_tag sessions_path do %>
+	  <%= prewrap_form('', 'Email','envelope') %>
+	  <%= text_field_tag :email, params[:email], :placeholder => "jobseeker@example.com", :autofocus=>"autofocus" %>
+	  <%= postwrap_form('Email is required') %>
+	  <%= prewrap_form('', 'Password','lock') %>
+	  <%= password_field_tag :password, nil %>
+	  <%= postwrap_form('Password is required') %>
+	  <div>
+	    <%= check_box_tag :remember_me, 1, params[:remember_me], :class => "checkbox" %>
+	    <%= label_tag :remember_me %>&nbsp;<span class="add-on"><a href="#" title="Stay logged in for 2 weeks. Not advisable in a kiosk situation." tabindex="-1"><i class="icon-question-sign"></i></a></span>
+	  </div>
+	  <%= label_tag :vip, 'Leave this field blank', :class => 'hidden' %>
+	  <%= hidden_field_tag :vip %>
+	  <br>
+	  <div>
+	    <%= submit_tag "Submit", :class => "btn" %>
+	  </div>
+	<% end %>
+  <div class="action-links">
+	  Forgotten password? <%= link_to "Reset", new_password_reset_path %>
+	  New user? <%= link_to "Register", new_user_path %>
+  </div>
+</fieldset>
+
+<br>
+<div class="red">
+TODO:
+<ul>
+ 	<li>Remove all traces of NP and graduate in code and dB</li>
+ 	<li>Add Make Note functionality</li>
+ 	<li>Add other search capabilities</li>
+ 	<li>Gem and feature list</li>
+ 	<li>Metrics report</li>
+</ul>
+Wish List:
+<ul>
+  <li>Upload resume</li>
+  <li>LinkedIn API connect</li>
+  <li>Map jobs in area</li>
+</ul>
+</div>

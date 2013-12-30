@@ -1,0 +1,19 @@
+<fieldset>
+  <legend>Create Employer <i class="icon-star-empty icon-offset"></i></legend>
+  <p class="info">
+    Instructions: Entering an email address will create a temporary password and send an invitation to the person at that address. The potential Employer user will be requested to change their temporary password when they log on for the first time.
+  </p>
+	<%= form_for @user, :as => :post, :url => nonprofits_path do |f| %>
+	  <%= render 'shared/error_messages', object: f.object %>
+	  <%= prewrap_form('user', 'Email','envelope') %>
+	  <%= text_field_tag "#{:user}[email]", params[:email], :class => "textfield", :autofocus=>"autofocus" %>
+	  <%= postwrap_form('Email is required') %>
+	  <%= hidden_field(:user, :password, :value => 'Temp4Chg!') %>
+	  <%= hidden_field(:user, :password_confirmation, :value => 'Temp4Chg!') %>
+	  <%= hidden_field(:user, :force_reset, :value => true) %>
+	  <div class="btn-group">
+	    <%= submit_tag "Submit", :class => "btn" %>
+	    <%= link_to 'Cancel', (URI(request.referer).path rescue :back), :class => "btn btn-inverse link2btn" %>
+	  </div>
+	<% end %>
+</fieldset>

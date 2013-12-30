@@ -1,0 +1,20 @@
+<!-- Solves duplicate code for button group on saved and faved items -->
+<%= referrer('action') %>
+<% if referrer('action') == 'saved' || referrer('action') == 'faved' %>
+  <%= link_to "Return to #{referrer('action')} list", "/#{referrer('action')}", :class=>'btn btn-info' %>
+<% end %>
+
+<% if params[:controller] == 'openings' %>
+  <% type = "opening" %>
+  <% pre = "S" %>
+<% elsif params[:controller] == 'nonprofits' %>
+  <% type = "employer" %>
+  <% pre = "F" %>
+<% end %>
+
+<% if !sel.include?(obj.id) %>
+  <%= link_to "#{pre}ave this #{type}!", {:controller=>"#{params[:controller]}", :action=>'add', :id=>obj.id}, :class=>'btn btn-success' %>
+<% else %>
+  <%= link_to 'Make note', '#', data: {confirm: 'Not yet implemented'}, :class=>'btn btn-primary' %>
+  <%= link_to "Remove from #{pre.downcase}aved list", {:controller=>"#{params[:controller]}", :action=>'remove', :id=>obj.id }, :class=>'btn btn-danger', data: {confirm: "This will delete any saved notes.\n\nAre you sure?"} %>
+<% end %>

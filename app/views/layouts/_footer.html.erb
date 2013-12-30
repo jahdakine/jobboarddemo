@@ -1,0 +1,13 @@
+<footer id="footer">
+	<div class="footer-links">
+		<ul>
+			<li><%= link_to_unless_current	'Privacy Policy', "/privacy_policy.html", :id => 'privacy_policy', :class => 'dialog' %></li>
+			<li><%= link_to_unless_current "User Agreement", "/user_agreement.html", :id => 'user_agreement', :class => 'dialog' %></li>
+			<li><%= link_to "Contact Us", "contact_us.html", :id => '/contact_us', :class => 'dialog' %></li>
+		</ul>
+	</div>
+	<br class="clear">
+  &copy; 2013 <%= link_to "The Art of Tech, LLC.", 'http://theartoftechllc.com', target: "_blank", :class => "footer-link" %> <i class="icon-star icon-share" title="Offsite link"></i> All rights reserved.
+</footer>
+
+<!-- If pages are caching: ?#{CGI::escape(Time.now.to_s)} -->

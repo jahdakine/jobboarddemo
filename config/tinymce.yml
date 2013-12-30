@@ -1,0 +1,13 @@
+toolbar_location: top
+toolbar_align: left
+statusbar_location: bottom
+buttons3_add:
+  - tablecontrols
+  - fullscreen
+plugins:
+  - table
+  - fullscreen
+  - fullpage
+  - charmap
+  - insertdatetime
+insertdate_dateformat: "%Y-%m-%d"

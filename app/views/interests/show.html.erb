@@ -1,0 +1,53 @@
+<fieldset>
+	<legend><%= @interest.name %></legend>
+  <div class="btn-group">
+    <%= render '/shared/create_io_button', :role => Admin %>
+  </div>
+	<table class="datatables" id="dt-interest-users">
+    <thead>
+      <tr>
+        <th>Job Seekers with interest</th>
+      </tr>
+    </thead>
+    <tbody>
+    	<% @interest.graduates.each do |graduate| %>
+    	<tr>
+    		<td><%= full_name(graduate) %></td>
+    	</tr>
+    	<% end %>
+		</tbody>
+    <tfoot>
+      <tr>
+        <th>Job Seekers with interest filter</th>
+      </tr>
+    </tfoot>
+  </table>
+  <br>
+	<table class="datatables" id="dt-categories-openings">
+    <thead>
+      <tr>
+        <th>Openings with Category</th>
+      </tr>
+    </thead>
+    <tbody>
+    	<% @interest.openings.each do |opening| %>
+    	<tr>
+    		<td><%= opening.position %></td>
+    	</tr>
+    	<% end %>
+		</tbody>
+    <tfoot>
+      <tr>
+        <th>Openings with Category filter</th>
+      </tr>
+    </tfoot>
+  </table>
+</fieldset>
+<div class="btn-group">
+  <%= render '/shared/create_io_button', :role => Admin %>
+</div>
+<div class="right">
+  <a href="javascript: window.location.reload()", class ="btn">Clear filter(s)</a>
+</div>
+
+<!-- optimized queries -->

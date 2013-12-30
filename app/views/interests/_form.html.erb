@@ -1,0 +1,10 @@
+<%= form_for(interest) do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+  <%= prewrap_form('interest', 'Name','tags') %>
+  <%= f.text_field :name, :class => "textfield" %>
+  <%= postwrap_form('Name is required') %>
+  <div class="btn-group">
+    <%= f.submit "Save changes", :class => "btn" %>
+    <%= link_to "Cancel", interests_path, :class => "btn btn-inverse link2btn" %>
+  </div>
+<% end %>

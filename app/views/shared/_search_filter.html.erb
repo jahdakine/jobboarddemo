@@ -1,0 +1,46 @@
+<fieldset class="nested-fieldset">
+  <legend class="nested-legend"><i class="icon-filter icon-offset-half"></i> Filters</legend>
+	<div class="btn-group">
+	  <%= submit_tag "Apply filter(s)", :name=>nil, :class=>"btn btn-inverse", :id=>'grad-filter' %>
+	  <%= link_to "Clear", {:params=>nil, :name=>nil}, :class=>"btn link2btn" %>
+	</div>
+
+	<div>
+		<span id="category" style="cursor: pointer; color: #0088cc;">Job <%= (params[:controller] == 'graduates' ? 'Interest' : 'Category' ) %></span> <i id="job-cat-icon" class="icon-chevron-down icon-offset-half"></i>
+		<% (!selected_interests.empty? ? disp = 'visible' : disp = 'none') %>
+		<div id="categories" style="display:<%= disp %>;margin: 0.25em 0 0.25em 1em;">
+		  <% interests.each do |interest| %>
+		    <%= check_box_tag "interests[]", interest.id, selected_interests.include?(interest.id.to_s), :id=>dom_id(interest) %>
+		    <%= label_tag dom_id(interest), interest.name,  :class=>"small-text list-label" %><br>
+		  <% end %>
+		</div>
+	</div>
+	<% if params[:controller] != 'graduates' %>
+		<div>
+			<span id="type" style="cursor: pointer; color: #0088cc;">Job Type</span> <i id="job-type-icon" class="icon-chevron-down icon-offset-half"></i>
+			<!-- TODO: add migration, no model -->
+			<div id="types" style="display: none;margin: 0.25em 0 0 1em;">
+				<input type="radio" /> <span class="small-text list-label">Part-time</span><br>
+				<input type="radio" /> <span class="small-text list-label">Full-time</span><br>
+				<input type="radio" /> <span class="small-text list-label">Permanent</span><br>
+				<input type="radio" /> <span class="small-text list-label">Temporary</span><br>
+				<input type="radio" /> <span class="small-text list-label">Contract</span><br>
+				<input type="radio" /> <span class="small-text list-label">Paid Intership</span><br>
+			</div>
+		</div>
+		<div>
+			<span id="location" style="cursor: pointer; color: #0088cc;">Job Location</span> <i id="job-loc-icon" class="icon-chevron-down icon-offset-half"></i>
+			<div id="locations" style="display: none;margin: 0.25em 0 0 1em;">
+				Within
+				<%= text_field_tag 'Miles', nil, :class=>"small-text list-label", :style=>"width:30px;" %>
+				miles of<br>
+				<%= text_field_tag 'City', nil, :placeholder=>'City', :class=>"small-text list-label" %>
+				<%= select_tag 'State', options_for_select(us_states), :name=>"state", :id=>"state", :prompt=>"State" %>
+			</div>
+		</div>
+	<% end %>
+	<div class="btn-group">
+	  <%= submit_tag "Apply filter(s)", :name=>nil, :class=>"btn btn-inverse", :id=>'grad-filter' %>
+	  <%= link_to "Clear", {:params=>nil, :name=>nil}, :class=>"btn link2btn" %>
+	</div>
+</fieldset>

@@ -1,0 +1,45 @@
+<header>
+  <div class="container" style="padding: 0; margin:0; background-color:rgb(159,167,214)">
+    <div class="center" style="background: url(<%= randomized_background_image %>) no-repeat center center;min-height: 150px;">
+      <div id="banner">
+        <img src="/assets/job-board-demo-header.gif">
+      </div>
+    </div>
+  </div>
+  <% if current_user %>
+    <div id="status">
+      Welcome <%= display_current_name || display_current_email %>
+      <%= "(Member)" if current_role(Graduate) %>
+      <%= "(Employer)" if current_role(Nonprofit) %>
+      <%= "(Administrator)" if current_role(Admin) %>
+    </div>
+  <% end %>
+  <nav class="header-links navbar navbar-default right" role="navigation">
+    <ul>
+      <% if current_user %>
+        <% if !current_role(Admin) %>
+          <!-- Profile -->
+          <li><%= link_to_unless_current "Profile", [:edit, current_user.role] %></li>
+          <!-- Search Graduates (NP) -->
+          <% if current_role(Nonprofit) && !current_user.role.company.blank? %>
+            <li><%= link_to_unless_current "Search Job Seekers", graduates_path %></li>
+          <% end %>
+          <!-- Search/Manage Openings -->
+          <% if current_role(Graduate) && !current_user.role.first_name.blank? %>
+            <li><%= link_to_unless_current "Search Openings", openings_path %></li>
+          <% elsif current_role(Nonprofit) && !current_user.role.company.blank? %>
+            <li><%= link_to_unless_current "Manage Openings", openings_path %></li>
+          <% end %>
+        <% else %>
+          <li><%= link_to_unless_current "Menu", admins_path %></li>
+        <% end %>
+        <!-- Log out -->
+        <li><%= link_to_unless_current "Log Out", logout_path %></li>
+      <% else %>
+        <li><%= link_to_unless_current "Register", register_path %></li>
+        <li><%= link_to_unless_current "Log In",  login_path %></li>
+      <% end %>
+    </ul>
+  </nav>
+  <br class="clear">
+</header>

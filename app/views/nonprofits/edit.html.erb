@@ -1,0 +1,61 @@
+<fieldset>
+	<legend>Update Profile</legend>
+	<%= display_note('agree') %>
+	<%= tinymce %>
+	<%= form_for(@nonprofit) do |f| %>
+	  <%= render 'shared/error_messages', object: f.object %>
+	  <%= prewrap_form('nonprofit', 'Company','star') %>
+	  <%= f.text_field :company, :class => "textfield", :autofocus=>"autofocus" %>
+	  <%= postwrap_form('Company is required') %>
+
+	  <%= prewrap_form('nonprofit', 'City','map-marker', 'left') %>
+	  <%= f.text_field :city, :class => "textfield", :id => "np-city" %>
+	  <%= postwrap_form('City is required') %>
+
+	  <%= prewrap_form('nonprofit', 'State','map-marker', 'left') %>
+	  <%= f.text_field :state, :class => "textfield", :id => "np-state" %>
+	  <%= postwrap_form('State is required') %>
+
+	  <%= prewrap_form('nonprofit', 'Zip Code','map-marker', 'left') %>
+	  <%= f.text_field :zip_code, :class => "textfield", :id => "np-zip" %>
+	  <%= postwrap_form('Zip Code is required') %>
+
+	  <br class="clear">
+
+	  <label>
+	    <%= f.label :description %>&nbsp;<span class="add-on"><a href="#" title="Description is required" tabindex="-1"><i class="icon-asterisk"></i></a></span>
+	  </label>
+	  <div class="field">
+	    <%= f.text_area :description, :class => "textarea tinymce", :id => "np-desc" %>
+	  </div>
+	  <%= display_note('emp_desc') %>
+		<fieldset id="np-settings" class="nested-fieldset"><legend class="nested-legend">Default Preferences (Not yet implemented)</legend>
+	    <div class="field">
+	    	<%= label_tag :def_rows, "Number of rows to show in table listings", :class=>'list-label' %><br>
+				<%= select_tag :def_rows, options_for_select(TABLE_ROWS), :style=>'width:75px;' %>
+	    </div>
+	  </fieldset>
+	  <hr>
+	  <label>
+	    <%= f.check_box :skip, :class => "checkbox", :id => 'skip' %>
+	    <%= label_tag :skip, "Skip this next time" %>&nbsp;<span class="add-on"><a href="#" title="Go directly to Manage Openings after logging in." tabindex="-1"><i class="icon-question-sign"></i></a></span>
+	  </label>
+	  <% case referrer('action')
+	      when "edit"
+	        if f.object && f.object.errors.any?
+	          return_text = "Cancel"
+	        else
+	          return_text = "Return to listing"
+	        end
+	      else
+	        return_text = "Cancel"
+	  end %>
+	  <br><br>
+	  <div class="btn-group">
+	    <%= f.submit "Save changes", :class => "btn", :id => 'np-submit' %>
+	    <% if current_role(Admin) %>
+	      <%= link_to "#{return_text}", nonprofits_path, :class => "btn btn-inverse link2btn", id: 'np-cancel' %>
+	    <% end %>
+	  </div>
+	<% end %>
+</fieldset>

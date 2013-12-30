@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= content_for?(:title) ? yield(:title) : APPNAME %></title>
+    <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "Job Board Demo" %>">
+    <%= stylesheet_link_tag "application", :media => "all" %>
+    <%= javascript_include_tag "application" %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body>
+    <header class="navbar"> <!-- navbar-fixed-top -->
+      <div class="row-fluid header-adjust">
+        <div class="span12">
+          <%= render 'layouts/navigation' %>
+        </div>
+      </div>
+    </header>
+    <main role="main">
+      <div class="container">
+        <div class="content">
+          <div class="row-fluid header-adjust">
+            <div class="span12">
+              <%= render 'layouts/messages' %>
+              <%= yield %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer>
+      <%= render 'layouts/footer' %>
+    </footer>
+    <% if Rails.env.development? %>
+      <div id="alert">
+        <h3 class="center">DEBUGGER</h3>
+        <ul>
+          <li>User: <%= (display_current_email.nil? ? display_current_name : display_current_email) rescue "None" %></li>
+          <li>User ID: <%= current_user.nil? ? 0 : current_user.id %></li>
+          <li>Role: <%= (display_current_role.empty? ? 'None' : display_current_role) %></li>
+          <li>Role ID: <%= current_user.nil? ? 0 : current_user.role_id %></li>
+        </ul>
+        <%= debug(params)  %>
+      </div>
+    <% end %>
+  </body>
+</html>

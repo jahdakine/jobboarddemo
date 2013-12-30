@@ -1,0 +1,68 @@
+<fieldset>
+  <legend>Manage Employers <i class="icon-star icon-offset"></i></legend>
+  <%= display_note('employers') %>
+  <div class="btn-group">
+    <%= link_to 'Create new Employer', new_nonprofit_path, :class => 'btn btn-primary' %>
+    <%= link_to 'Return to menu', admins_path, :class => 'btn btn-info' %>
+  </div>
+  <br>
+  <table class="datatables" id="dt-nonprofits">
+    <thead>
+      <tr>
+        <th>&nbsp;</th>
+        <th>ID</th>
+        <th>Email</th>
+        <th>Company Name</th>
+        <th>Openings</th>
+        <th>Created</th>
+        <th>Profile Updated</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @nonprofits.each do |nonprofit| %>
+        <tr>
+          <td>
+            <div class="btn-group btn-group-xs">
+              <%= link_to 'Show', nonprofit_path(nonprofit), :class => "btn btn-mini btn-success", :id => "show" %>
+              <%= link_to 'Edit', edit_nonprofit_path(nonprofit), :class => "btn btn-mini btn-warning", :id => "edit", data: { confirm: "Be cautious when editing another user\'s input. This could cause confusion and/or mistrust of the system.\n\nAre you sure?" } %>
+              <% if !nonprofit.company? %>
+                <% msg = "WARNING: Continuing will delete this Employer user.\n\nAre you sure? This action cannot be undone." %>
+                <% btn_type = "" %>
+              <% else %>
+                <% msg = "STRONG WARNING: Continuing will delete this Employer user and ALL associated Openings.\n\nAre you sure? This action cannot be undone." %>
+                <% btn_type = 'btn-danger' %>
+              <% end %>
+              <%= link_to 'Delete', nonprofit, method: :delete, :class => "btn btn-mini #{btn_type}", :id => "delete", data: { confirm: msg } %>
+            </div>
+          </td>
+          <td><%= nonprofit.id %></td>
+          <td><%= nonprofit.user_email %></td>
+          <td><%= (!nonprofit.company? ? "<span class='red'>Incomplete profile</span>".html_safe : nonprofit.company) %></td>
+          <td><span class="badge <%= (nonprofit.openings_count > 0 ? 'badge-info' : 'badge') %>"><%= nonprofit.openings_count %></span></td>
+          <td><%= nonprofit.user_created_at.strftime('%m/%d/%Y') %></td>
+          <td><%= (!nonprofit.company? ? "<span class='red'>Never</span>".html_safe : nonprofit.user_updated_at.strftime('%m/%d/%Y %I:%m %p')) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+    <tfoot>
+      <tr>
+        <th>&nbsp;</th>
+        <th class="foot-filter">ID filter</th>
+        <th class="foot-filter">Email filter</th>
+        <th class="foot-filter">Company filter</th>
+        <th>&nbsp;</th>
+        <th class="foot-filter"></th>
+        <th class="foot-filter"></th>
+      </tr>
+    </tfoot>
+  </table>
+  <div class="btn-group">
+    <%= link_to 'Create new Employer', new_nonprofit_path, :class => 'btn btn-primary' %>
+    <%= link_to 'Return to menu', admins_path, :class => 'btn btn-info' %>
+  </div>
+  <div class="right">
+    <a href="javascript: window.location.reload()", class ="btn">Clear filter(s)</a>
+  </div>
+</fieldset>
+
+<!-- optimized queries -->

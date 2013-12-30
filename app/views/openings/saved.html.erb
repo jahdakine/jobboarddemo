@@ -1,0 +1,62 @@
+<fieldset>
+  <legend>Saved Job Openings</legend>
+  <!-- <div class="row-fluid">
+    <div class="span12">
+      <fieldset class="nested-fieldset">
+        <legend class="nested-legend">Instructions</legend> -->
+        <table class="datatables" id="dt-saved">
+          <thead>
+            <tr>
+              <th>Position</th>
+              <th>City</th>
+              <th>State</th>
+              <th>Company</th>
+              <th>Date Open</th>
+              <th>Date Closed</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @saved.each do |opening| %>
+              <tr>
+                <td>
+                  <%= link_to "#{opening.position}", {:controller => 'openings', :action => 'show', :id => "#{opening.id}"} %>
+                </td>
+                <td><%= opening.city %></td>
+                <td><%= opening.state %></td>
+                <td>
+                  <%= opening.nonprofit_company %>
+                  <%#= link_to "#{opening.nonprofit_company}", {:controller => 'nonprofits', :action => 'display', :id => "#{opening.nonprofit.id}"} %>
+                </td>
+                <td><%= display_open_date(opening) %></td>
+                <td><%= display_closed_date(opening) %></td>
+              </tr>
+            <% end %>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th class="foot-filter">Position filter</th>
+              <th class="foot-filter">City filter</th>
+              <th class="foot-filter">State filter</th>
+              <th class="foot-filter">Company filter</th>
+              <th class="foot-filter"></th>
+              <th class="foot-filter"></th>
+            </tr>
+          </tfoot>
+        </table>
+      </fieldset>
+    </div>
+    <!-- <div class="span2">
+      <%#= form_tag openings_path, :method => 'get' do %>
+        <%#= render 'shared/search_filter', :interests => @interests, :selected_interests => @selected_interests %>
+      <%# end %>
+    </div> -->
+  <!-- </div> -->
+  <div>
+    <%= link_to 'Return to listing', openings_path, :class => 'btn' %>
+    <a href="javascript: window.location.reload()", class ="btn right">Clear filter(s)</a>
+  </div>
+  <br>
+  <%= display_note('closed') %>
+</fieldset>
+
+<!-- optimized queries -->
