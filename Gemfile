@@ -59,6 +59,8 @@ group :development, :test do
   gem 'rails-footnotes', '>= 3.7.5.rc4'
   gem 'request-log-analyzer'
   gem 'smusher'
+  gem 'dotenv-rails'
+    #https://gist.github.com/cjolly/6265302
 end
 
 group :test do

@@ -90,6 +90,9 @@ GEM
       debugger-ruby_core_source (~> 1.2.4)
     debugger-linecache (1.2.0)
     debugger-ruby_core_source (1.2.4)
+    dotenv (0.9.0)
+    dotenv-rails (0.9.0)
+      dotenv (= 0.9.0)
     erubis (2.7.0)
     exception_notification (4.0.1)
       actionmailer (>= 3.0.4)
@@ -302,6 +305,7 @@ DEPENDENCIES
   childprocess (= 0.3.6)
   coffee-rails (= 4.0.0)
   debugger
+  dotenv-rails
   exception_notification
   faker (= 1.1.2)
   geokit-rails
