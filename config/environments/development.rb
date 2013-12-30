@@ -1,4 +1,4 @@
-Pbc::Application.configure do
+JobBoardDemo::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
   # In the development environment your application's code is reloaded on
@@ -35,7 +35,7 @@ Pbc::Application.configure do
   config.action_mailer.smtp_settings = { address: 'localhost',
                                          port: 1025 }
 
-  Pbc::Application.config.middleware.use ExceptionNotification::Rack,
+  JobBoardDemo::Application.config.middleware.use ExceptionNotification::Rack,
   #:ignore_exceptions => ['ActionView::Template::Error'] + ExceptionNotifier.ignored_exceptions,
   :email => {
     :email_prefix => "[Job Board Demo Application - ERROR] ",

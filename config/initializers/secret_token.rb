@@ -10,5 +10,5 @@
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
 
-Pbc::Application.config.secret_key_base = ENV['RAILS_SECRET_KEY_BASE']
+JobBoardDemo::Application.config.secret_key_base = ENV['RAILS_SECRET_KEY_BASE']
 #run heroku config:set RAILS_SECRET_KEY_BASE=`rake secret` > /dev/null

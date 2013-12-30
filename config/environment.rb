@@ -2,7 +2,7 @@
 require File.expand_path('../application', __FILE__)
 
 # Initialize the Rails application.
-Pbc::Application.initialize!
+JobBoardDemo::Application.initialize!
 
 #auto-load hirb
 if defined?(Rails::Console)

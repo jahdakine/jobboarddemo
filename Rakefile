@@ -3,4 +3,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-Pbc::Application.load_tasks
+JobBoardDemo::Application.load_tasks

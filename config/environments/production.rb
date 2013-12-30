@@ -1,4 +1,4 @@
-Pbc::Application.configure do
+JobBoardDemo::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Code is not reloaded between requests.
@@ -81,7 +81,7 @@ Pbc::Application.configure do
   config.log_formatter = ::Logger::Formatter.new
 
   #Mailer config
-  Pbc::Application.config.middleware.use ExceptionNotification::Rack,
+  JobBoardDemo::Application.config.middleware.use ExceptionNotification::Rack,
   #:ignore_exceptions => ['ActionView::Template::Error'] + ExceptionNotifier.ignored_exceptions,
   :email => {
     :email_prefix => "[Boulder County PERL Application - ERROR] ",

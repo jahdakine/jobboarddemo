@@ -62,7 +62,7 @@
 #                     GET    /*path(.:format)                    sessions#destroy
 #
 
-Pbc::Application.routes.draw do
+JobBoardDemo::Application.routes.draw do
   root :to => 'sessions#new'
 
   resources :admins, :only => [:index]
