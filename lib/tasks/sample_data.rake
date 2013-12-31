@@ -1,9 +1,9 @@
 namespace :db do
-  desc "populate graduates"
-  task populate_graduates: :environment do
+  desc "populate members"
+  task populate_members: :environment do
     Faker::Config.locale = :en
     6.times do |n|
-      email = "graduate#{n+1}@example.com"
+      email = "jobseeker#{n+1}@example.com"
       puts email
       password = '123qweASD!'
       password_confirmation = '123qweASD!'
@@ -22,7 +22,7 @@ namespace :db do
       phone = Faker::PhoneNumber.phone_number
       work_experience = Faker::Lorem.paragraphs(rand(2..8)).join('\n')
       volunteer_experience = Faker::Lorem.paragraphs(rand(2..8)).join('\n')
-      user.role = Graduate.new(
+      user.role = Member.new(
         first_name: first_name,
         last_name: last_name,
         address_1: address_1,
@@ -37,11 +37,11 @@ namespace :db do
       user.save!
     end
   end
-  desc "populate nonprofits"
-  task populate_nonprofits: :environment do
+  desc "populate employers"
+  task populate_employers: :environment do
     Faker::Config.locale = :en
     6.times do |n|
-      email = "nonprofit#{n+1}@example.com"
+      email = "employer#{n+1}@example.com"
       puts email
       password = '123qweASD!'
       password_confirmation = '123qweASD!'
@@ -52,7 +52,7 @@ namespace :db do
       )
       company = Faker::Company.name
       description = Faker::Company.catch_phrase
-      user.role = Nonprofit.new(
+      user.role = Employer.new(
         company: company,
         description: description
       )
@@ -80,7 +80,7 @@ namespace :db do
     Faker::Config.locale = :en
     99.times do |n|
       date_range = rand(1..60)
-      nonprofit_id = rand(1..6)
+      employer_id = rand(1..6)
       active = true
       position = Faker::Lorem.words(rand(2..5)).join(' ')
       puts position
@@ -91,7 +91,7 @@ namespace :db do
       state = Faker::Address.state
       zip_code = Faker::Address.zip_code
       Opening.create!(
-        nonprofit_id: nonprofit_id,
+        employer_id: employer_id,
         active: active,
         position: position,
         description: description,
@@ -118,8 +118,8 @@ namespace :db do
   end
   desc "perform all populations"
   task :populate_all do
-    Rake::Task['db:populate_graduates'].invoke
-    Rake::Task['db:populate_nonprofits'].invoke
+    Rake::Task['db:populate_members'].invoke
+    Rake::Task['db:populate_employers'].invoke
     Rake::Task['db:populate_admin'].invoke
     Rake::Task['db:populate_openings'].invoke
     Rake::Task['db:populate_interests'].invoke

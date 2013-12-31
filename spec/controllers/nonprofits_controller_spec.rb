@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe NonprofitsController do
+describe EmployersController do
 
   describe "GET 'index'" do
     it "returns http success" do

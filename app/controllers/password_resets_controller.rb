@@ -59,10 +59,10 @@ class PasswordResetsController < ApplicationController
         user_path = root_path
       elsif rtype == 'Admin'
         user_path = admins_path
-      elsif rtype == 'Nonprofit'
-        user_path = edit_nonprofit_path(rid)
-      elsif rtype == 'graduate'
-        user_path = edit_graduate_path(rid)
+      elsif rtype == 'Employer'
+        user_path = edit_employer_path(rid)
+      elsif rtype == 'member'
+        user_path = edit_member_path(rid)
       end
       redirect_to user_path, :notice => "Password has been reset!"
     else

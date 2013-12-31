@@ -7,19 +7,19 @@
 #                     POST   /users(.:format)                    users#create
 #            new_user GET    /users/new(.:format)                users#new
 #                user DELETE /users/:id(.:format)                users#destroy
-#           graduates GET    /graduates(.:format)                graduates#index
-#       edit_graduate GET    /graduates/:id/edit(.:format)       graduates#edit
-#            graduate GET    /graduates/:id(.:format)            graduates#show
-#                     PATCH  /graduates/:id(.:format)            graduates#update
-#                     PUT    /graduates/:id(.:format)            graduates#update
-#          nonprofits GET    /nonprofits(.:format)               nonprofits#index
-#                     POST   /nonprofits(.:format)               nonprofits#create
-#       new_nonprofit GET    /nonprofits/new(.:format)           nonprofits#new
-#      edit_nonprofit GET    /nonprofits/:id/edit(.:format)      nonprofits#edit
-#           nonprofit GET    /nonprofits/:id(.:format)           nonprofits#show
-#                     PATCH  /nonprofits/:id(.:format)           nonprofits#update
-#                     PUT    /nonprofits/:id(.:format)           nonprofits#update
-#                     DELETE /nonprofits/:id(.:format)           nonprofits#destroy
+#           members GET    /members(.:format)                members#index
+#       edit_member GET    /members/:id/edit(.:format)       members#edit
+#            member GET    /members/:id(.:format)            members#show
+#                     PATCH  /members/:id(.:format)            members#update
+#                     PUT    /members/:id(.:format)            members#update
+#          employers GET    /employers(.:format)               employers#index
+#                     POST   /employers(.:format)               employers#create
+#       new_employer GET    /employers/new(.:format)           employers#new
+#      edit_employer GET    /employers/:id/edit(.:format)      employers#edit
+#           employer GET    /employers/:id(.:format)           employers#show
+#                     PATCH  /employers/:id(.:format)           employers#update
+#                     PUT    /employers/:id(.:format)           employers#update
+#                     DELETE /employers/:id(.:format)           employers#destroy
 #            openings GET    /openings(.:format)                 openings#index
 #                     POST   /openings(.:format)                 openings#create
 #         new_opening GET    /openings/new(.:format)             openings#new
@@ -44,15 +44,15 @@
 # edit_password_reset GET    /password_resets/:id/edit(.:format) password_resets#edit
 #      password_reset PATCH  /password_resets/:id(.:format)      password_resets#update
 #                     PUT    /password_resets/:id(.:format)      password_resets#update
-#                     GET    /display/:id(.:format)              nonprofits#display
+#                     GET    /display/:id(.:format)              employers#display
 #               purge GET    /purge(.:format)                    users#purge
 #               close GET    /close(.:format)                    openings#close
 #               saved GET    /saved(.:format)                    openings#saved
 #                     GET    /add_saved/:id(.:format)            openings#add
 #                     GET    /remove_saved/:id(.:format)         openings#remove
-#               faved GET    /faved(.:format)                    nonprofits#faved
-#                     GET    /add_fave/:id(.:format)             nonprofits#add
-#                     GET    /remove_fave/:id(.:format)          nonprofits#remove
+#               faved GET    /faved(.:format)                    employers#faved
+#                     GET    /add_fave/:id(.:format)             employers#add
+#                     GET    /remove_fave/:id(.:format)          employers#remove
 #               login GET    /login(.:format)                    sessions#new
 #            register GET    /register(.:format)                 users#new
 #              logout GET    /logout(.:format)                   sessions#destroy
@@ -67,20 +67,20 @@ JobBoardDemo::Application.routes.draw do
 
   resources :admins, :only => [:index]
   resources :users, only: [:index, :new, :create, :destroy]
-  resources :graduates, only: [:index, :show, :edit, :update]
-  resources :nonprofits
+  resources :members, only: [:index, :show, :edit, :update]
+  resources :employers
   resources :openings
   resources :interests
   resources :sessions, :only => [:new, :create, :destroy]
   resources :password_resets, :only => [:new, :create, :edit, :update]
 
-  match '/display/:id', to: 'nonprofits#display', via: 'get'
+  match '/display/:id', to: 'employers#display', via: 'get'
   match '/saved', to: 'openings#saved', via: 'get'
   match '/add_saved/:id', to: 'openings#add', via: 'get'
   match '/remove_saved/:id', to: 'openings#remove', via: 'get'
-  match '/faved', to: 'nonprofits#faved', via: 'get'
-  match '/add_fave/:id', to: 'nonprofits#add', via: 'get'
-  match '/remove_fave/:id', to: 'nonprofits#remove', via: 'get'
+  match '/faved', to: 'employers#faved', via: 'get'
+  match '/add_fave/:id', to: 'employers#add', via: 'get'
+  match '/remove_fave/:id', to: 'employers#remove', via: 'get'
   match '/purge', to: 'users#purge', via: 'get'
   match '/close', to: 'openings#close', via: 'get'
   match '/login', to: 'sessions#new', via: 'get'

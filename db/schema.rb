@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131220161504) do
+ActiveRecord::Schema.define(version: 20131231000738) do
 
   create_table "admins", force: true do |t|
     t.datetime "created_at"
@@ -19,14 +19,14 @@ ActiveRecord::Schema.define(version: 20131220161504) do
   end
 
   create_table "applications", force: true do |t|
-    t.integer  "graduate_id"
+    t.integer  "member_id"
     t.integer  "opening_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "notes"
   end
 
-  add_index "applications", ["graduate_id"], name: "index_applications_on_graduate_id", using: :btree
+  add_index "applications", ["member_id"], name: "index_applications_on_member_id", using: :btree
   add_index "applications", ["opening_id"], name: "index_applications_on_opening_id", using: :btree
 
   create_table "categorizations", force: true do |t|
@@ -40,17 +40,53 @@ ActiveRecord::Schema.define(version: 20131220161504) do
   add_index "categorizations", ["interest_id"], name: "index_categorizations_on_interest_id", using: :btree
   add_index "categorizations", ["opening_id"], name: "index_categorizations_on_opening_id", using: :btree
 
+  create_table "employers", force: true do |t|
+    t.string   "company",        limit: 50
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "skip",                      default: false
+    t.integer  "openings_count",            default: 0
+    t.string   "city",           limit: 30
+    t.string   "state",          limit: 30
+    t.string   "zip_code",       limit: 10
+  end
+
+  add_index "employers", ["openings_count"], name: "index_employers_on_openings_count", using: :btree
+
   create_table "favoriteds", force: true do |t|
-    t.integer  "nonprofit_id"
-    t.integer  "graduate_id"
+    t.integer  "employer_id"
+    t.integer  "member_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "favoriteds", ["graduate_id", "nonprofit_id"], name: "index_favoriteds_on_graduate_id_and_nonprofit_id", using: :btree
-  add_index "favoriteds", ["graduate_id"], name: "index_favoriteds_on_graduate_id", using: :btree
+  add_index "favoriteds", ["member_id", "employer_id"], name: "index_favoriteds_on_member_id_and_employer_id", using: :btree
+  add_index "favoriteds", ["member_id"], name: "index_favoriteds_on_member_id", using: :btree
 
-  create_table "graduates", force: true do |t|
+  create_table "interesteds", force: true do |t|
+    t.integer  "interest_id"
+    t.integer  "member_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "interesteds", ["interest_id"], name: "index_interesteds_on_interest_id", using: :btree
+  add_index "interesteds", ["member_id", "interest_id"], name: "index_interesteds_on_member_id_and_interest_id", using: :btree
+  add_index "interesteds", ["member_id"], name: "index_interesteds_on_member_id", using: :btree
+
+  create_table "interests", force: true do |t|
+    t.string   "name",           limit: 35
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "openings_count",            default: 0
+    t.integer  "members_count",             default: 0
+  end
+
+  add_index "interests", ["members_count"], name: "index_interests_on_members_count", using: :btree
+  add_index "interests", ["openings_count"], name: "index_interests_on_openings_count", using: :btree
+
+  create_table "members", force: true do |t|
     t.string   "first_name",           limit: 25
     t.string   "last_name",            limit: 25
     t.string   "address_1",            limit: 50
@@ -66,44 +102,8 @@ ActiveRecord::Schema.define(version: 20131220161504) do
     t.boolean  "skip",                            default: false
   end
 
-  create_table "interesteds", force: true do |t|
-    t.integer  "interest_id"
-    t.integer  "graduate_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "interesteds", ["graduate_id", "interest_id"], name: "index_interesteds_on_graduate_id_and_interest_id", using: :btree
-  add_index "interesteds", ["graduate_id"], name: "index_interesteds_on_graduate_id", using: :btree
-  add_index "interesteds", ["interest_id"], name: "index_interesteds_on_interest_id", using: :btree
-
-  create_table "interests", force: true do |t|
-    t.string   "name",            limit: 35
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "openings_count",             default: 0
-    t.integer  "graduates_count",            default: 0
-  end
-
-  add_index "interests", ["graduates_count"], name: "index_interests_on_graduates_count", using: :btree
-  add_index "interests", ["openings_count"], name: "index_interests_on_openings_count", using: :btree
-
-  create_table "nonprofits", force: true do |t|
-    t.string   "company",        limit: 50
-    t.text     "description"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.boolean  "skip",                      default: false
-    t.integer  "openings_count",            default: 0
-    t.string   "city",           limit: 30
-    t.string   "state",          limit: 30
-    t.string   "zip_code",       limit: 10
-  end
-
-  add_index "nonprofits", ["openings_count"], name: "index_nonprofits_on_openings_count", using: :btree
-
   create_table "openings", force: true do |t|
-    t.integer  "nonprofit_id"
+    t.integer  "employer_id"
     t.string   "position"
     t.text     "description"
     t.boolean  "active"
@@ -111,13 +111,13 @@ ActiveRecord::Schema.define(version: 20131220161504) do
     t.date     "date_closed"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "views_count",             default: 0
-    t.string   "city",         limit: 30
-    t.string   "state",        limit: 30
-    t.string   "zip_code",     limit: 10
+    t.integer  "views_count",            default: 0
+    t.string   "city",        limit: 30
+    t.string   "state",       limit: 30
+    t.string   "zip_code",    limit: 10
   end
 
-  add_index "openings", ["nonprofit_id"], name: "index_openings_on_nonprofit_id", using: :btree
+  add_index "openings", ["employer_id"], name: "index_openings_on_employer_id", using: :btree
   add_index "openings", ["views_count"], name: "index_openings_on_views_count", using: :btree
 
   create_table "users", force: true do |t|
@@ -128,15 +128,12 @@ ActiveRecord::Schema.define(version: 20131220161504) do
     t.string   "auth_token"
     t.string   "password_reset_token"
     t.datetime "password_reset_sent_at"
-    t.string   "role_type",              limit: 20,  default: "Graduate", null: false
-    t.integer  "role_id",                                                 null: false
+    t.string   "role_type",                          default: "Member", null: false
+    t.integer  "role_id",                                               null: false
     t.boolean  "force_reset",                        default: false
   end
 
   add_index "users", ["role_type", "role_id"], name: "index_users_on_role_id", unique: true, using: :btree
   add_index "users", ["role_type"], name: "index_users_on_role_type", using: :btree
-
-# Could not dump table "view_graduate_users" because of following ActiveRecord::StatementInvalid
-#   Mysql2::Error: SHOW VIEW command denied to user 'tester'@'localhost' for table 'view_graduate_users': SHOW CREATE TABLE `view_graduate_users`
 
 end

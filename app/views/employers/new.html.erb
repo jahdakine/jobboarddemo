@@ -3,7 +3,7 @@
   <p class="info">
     Instructions: Entering an email address will create a temporary password and send an invitation to the person at that address. The potential Employer user will be requested to change their temporary password when they log on for the first time.
   </p>
-	<%= form_for @user, :as => :post, :url => nonprofits_path do |f| %>
+	<%= form_for @user, :as => :post, :url => employers_path do |f| %>
 	  <%= render 'shared/error_messages', object: f.object %>
 	  <%= prewrap_form('user', 'Email','envelope') %>
 	  <%= text_field_tag "#{:user}[email]", params[:email], :class => "textfield", :autofocus=>"autofocus" %>

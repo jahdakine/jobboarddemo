@@ -3,7 +3,7 @@
 # Table name: openings
 #
 #  id           :integer          not null, primary key
-#  nonprofit_id :integer
+#  employer_id :integer
 #  position     :string(255)
 #  description  :text
 #  active       :boolean
@@ -17,15 +17,15 @@
 #  zip_code     :string(10)
 #
 class Opening < ActiveRecord::Base
-  belongs_to :nonprofit, :counter_cache => :openings_count
+  belongs_to :employer, :counter_cache => :openings_count
   #interests-openings join (categorization)
   has_many :categorizations
   has_many :interests, :through => :categorizations
-  #openings-graduates join (applications)
+  #openings-members join (applications)
   has_many :applications
-  has_many :graduates, :through => :applications
+  has_many :members, :through => :applications
 
-  delegate :company, :id, :to => :nonprofit, :prefix => true
+  delegate :company, :id, :to => :employer, :prefix => true
 
   validates_presence_of :position
   validates :city, :presence => true, :length => { :maximum => 30 }

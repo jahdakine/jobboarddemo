@@ -1,9 +1,9 @@
 <fieldset>
-	<legend><%= @nonprofit.company %> - <%= @nonprofit.city %>, <%= @nonprofit.state %></legend>
+	<legend><%= @employer.company %> - <%= @employer.city %>, <%= @employer.state %></legend>
 	<label>Email:</label>
-	<div class="field"><%= mail_to @nonprofit.user_email, @nonprofit.user_email %></div>
+	<div class="field"><%= mail_to @employer.user_email, @employer.user_email %></div>
 	<label>Description:</label>
-	<div class="field"><%= sanitized(@nonprofit.description) %><div>
+	<div class="field"><%= sanitized(@employer.description) %><div>
 	<br>
 	<div class="btn-group">
 		<% if referrer('action') == 'show' %>
@@ -11,8 +11,8 @@
 		<% end %>
 		<% (session[:last_search] ? back = session[:last_search] : back = openings_path) %>
 		<%= link_to 'Return to listing', back, :class => 'btn' %>
-		<% if current_role(Graduate) %>
-			<%= render '/shared/set_fs_button_group', :obj => @nonprofit, :sel => @selected_favoriteds %>
+		<% if current_role(Member) %>
+			<%= render '/shared/set_fs_button_group', :obj => @employer, :sel => @selected_favoriteds %>
 		<% end %>
 	</div>
 </fieldset>

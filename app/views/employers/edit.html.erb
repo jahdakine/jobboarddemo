@@ -2,21 +2,21 @@
 	<legend>Update Profile</legend>
 	<%= display_note('agree') %>
 	<%= tinymce %>
-	<%= form_for(@nonprofit) do |f| %>
+	<%= form_for(@employer) do |f| %>
 	  <%= render 'shared/error_messages', object: f.object %>
-	  <%= prewrap_form('nonprofit', 'Company','star') %>
+	  <%= prewrap_form('employer', 'Company','star') %>
 	  <%= f.text_field :company, :class => "textfield", :autofocus=>"autofocus" %>
 	  <%= postwrap_form('Company is required') %>
 
-	  <%= prewrap_form('nonprofit', 'City','map-marker', 'left') %>
+	  <%= prewrap_form('employer', 'City','map-marker', 'left') %>
 	  <%= f.text_field :city, :class => "textfield", :id => "np-city" %>
 	  <%= postwrap_form('City is required') %>
 
-	  <%= prewrap_form('nonprofit', 'State','map-marker', 'left') %>
+	  <%= prewrap_form('employer', 'State','map-marker', 'left') %>
 	  <%= f.text_field :state, :class => "textfield", :id => "np-state" %>
 	  <%= postwrap_form('State is required') %>
 
-	  <%= prewrap_form('nonprofit', 'Zip Code','map-marker', 'left') %>
+	  <%= prewrap_form('employer', 'Zip Code','map-marker', 'left') %>
 	  <%= f.text_field :zip_code, :class => "textfield", :id => "np-zip" %>
 	  <%= postwrap_form('Zip Code is required') %>
 
@@ -54,7 +54,7 @@
 	  <div class="btn-group">
 	    <%= f.submit "Save changes", :class => "btn", :id => 'np-submit' %>
 	    <% if current_role(Admin) %>
-	      <%= link_to "#{return_text}", nonprofits_path, :class => "btn btn-inverse link2btn", id: 'np-cancel' %>
+	      <%= link_to "#{return_text}", employers_path, :class => "btn btn-inverse link2btn", id: 'np-cancel' %>
 	    <% end %>
 	  </div>
 	<% end %>

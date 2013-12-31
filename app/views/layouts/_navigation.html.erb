@@ -9,8 +9,8 @@
   <% if current_user %>
     <div id="status">
       Welcome <%= display_current_name || display_current_email %>
-      <%= "(Member)" if current_role(Graduate) %>
-      <%= "(Employer)" if current_role(Nonprofit) %>
+      <%= "(Member)" if current_role(Member) %>
+      <%= "(Employer)" if current_role(Employer) %>
       <%= "(Administrator)" if current_role(Admin) %>
     </div>
   <% end %>
@@ -20,14 +20,14 @@
         <% if !current_role(Admin) %>
           <!-- Profile -->
           <li><%= link_to_unless_current "Profile", [:edit, current_user.role] %></li>
-          <!-- Search Graduates (NP) -->
-          <% if current_role(Nonprofit) && !current_user.role.company.blank? %>
-            <li><%= link_to_unless_current "Search Job Seekers", graduates_path %></li>
+          <!-- Search Members (NP) -->
+          <% if current_role(Employer) && !current_user.role.company.blank? %>
+            <li><%= link_to_unless_current "Search Job Seekers", members_path %></li>
           <% end %>
           <!-- Search/Manage Openings -->
-          <% if current_role(Graduate) && !current_user.role.first_name.blank? %>
+          <% if current_role(Member) && !current_user.role.first_name.blank? %>
             <li><%= link_to_unless_current "Search Openings", openings_path %></li>
-          <% elsif current_role(Nonprofit) && !current_user.role.company.blank? %>
+          <% elsif current_role(Employer) && !current_user.role.company.blank? %>
             <li><%= link_to_unless_current "Manage Openings", openings_path %></li>
           <% end %>
         <% else %>

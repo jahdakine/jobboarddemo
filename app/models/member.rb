@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: graduates
+# Table name: members
 #
 #  id                   :integer          not null, primary key
 #  first_name           :string(25)
@@ -18,17 +18,17 @@
 #  skip                 :boolean          default(FALSE)
 #
 
-class Graduate < ActiveRecord::Base
+class Member < ActiveRecord::Base
   has_one :user, :as => :role, dependent: :destroy
-  #graduates-interests join (interested)
+  #members-interests join (interested)
   has_many :interesteds
   has_many :interests, :through => :interesteds
-  #graduates-openings join (applications)
+  #members-openings join (applications)
   has_many :applications
   has_many :openings, :through => :applications
-  #graduates-nonprofits join (favoriteds)
+  #members-employers join (favoriteds)
   has_many :favoriteds
-  has_many :nonprofits, :through => :favoriteds
+  has_many :employers, :through => :favoriteds
 
   delegate :email, :created_at, :updated_at, :to => :user, :prefix => true
 

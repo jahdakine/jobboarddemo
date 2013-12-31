@@ -1,7 +1,7 @@
 <fieldset>
-  <legend><%= (current_role(Graduate) ? 'Search' : 'Manage') %> Job Openings</legend>
+  <legend><%= (current_role(Member) ? 'Search' : 'Manage') %> Job Openings</legend>
   <div class="row-fluid">
-    <% if current_role(Graduate) %>
+    <% if current_role(Member) %>
       <% span = "span8" %>
       <div class="span2">
         <fieldset class="nested-fieldset">
@@ -37,8 +37,8 @@
           </legend>
             <ul class="small-text">
               <% if @faved.count > 0  %>
-                <% @faved.limit(5).each do |nonprofit| %>
-                  <li><%= link_to "#{nonprofit.company}", {:controller => 'nonprofits', :action => 'display', :id => "#{nonprofit.id}"} %></li>
+                <% @faved.limit(5).each do |employer| %>
+                  <li><%= link_to "#{employer.company}", {:controller => 'employers', :action => 'display', :id => "#{employer.id}"} %></li>
                 <% end %>
                 <% if @faved.count > 5 %>
                   <i class="icon-list"></i> <%= link_to "More", "/faved", :class => 'more' %>
@@ -56,18 +56,18 @@
       <fieldset class="nested-fieldset">
         <legend class="nested-legend">Instructions</legend>
           <%= display_note('filter') %>
-          <% if current_role(Nonprofit) %>
+          <% if current_role(Employer) %>
             <div class="btn-group">
               <%= link_to 'Create new opening', new_opening_path, :class => 'btn btn-primary' %>
             </div>
           <%   end %>
           <%= render 'table', :openings => @openings %>
-          <% if current_role(Nonprofit) %>
+          <% if current_role(Employer) %>
             <div class="btn-group">
               <%= link_to 'Create new opening', new_opening_path, :class => 'btn btn-primary' %>
             </div>
           <% end %>
-          <% if !current_role(Graduate) %>
+          <% if !current_role(Member) %>
             <%= display_note('date') %>
           <% end %>
       </fieldset>

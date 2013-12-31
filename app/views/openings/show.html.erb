@@ -1,9 +1,9 @@
 <fieldset>
 	<legend>
 		<% if !current_role(Admin) %>
-			<%= link_to "#{@opening.nonprofit_company} - #{@opening.city}, #{@opening.state}", {:controller => 'nonprofits', :action => "#{(current_role(Graduate) ? 'display' : 'edit')}", :id => "#{@opening.nonprofit_id}"}, :class => "legend-link"%>
+			<%= link_to "#{@opening.employer_company} - #{@opening.city}, #{@opening.state}", {:controller => 'employers', :action => "#{(current_role(Member) ? 'display' : 'edit')}", :id => "#{@opening.employer_id}"}, :class => "legend-link"%>
 		<% else %>
-			<%= @opening.nonprofit_company %>
+			<%= @opening.employer_company %>
 		<% end %>
 	</legend>
 	<h2>Position:
@@ -23,28 +23,28 @@
 	<div>
 		<%= render '/shared/int_cat_chosen', :obj => @opening %>
 	</div>
-	<% if !current_role(Graduate) %>
+	<% if !current_role(Member) %>
 		<div>
 			<span>Active</span>: <%= (@opening.active? ? "Yes" : "No") %>
 		</div>
 	<% end %>
 	<br>
 	<div class="btn-group">
-		<%= render '/shared/create_io_button', :role => Nonprofit %>
+		<%= render '/shared/create_io_button', :role => Employer %>
 		<% if current_role(Admin) %>
 			<%= link_to 'Return to Employer',
-				nonprofit_path(@opening.nonprofit.id), :class => 'btn btn-inverse'
+				employer_path(@opening.employer.id), :class => 'btn btn-inverse'
 			%>
-			<%= link_to 'Return to listing', nonprofits_path, :class => 'btn btn-info' %>
+			<%= link_to 'Return to listing', employers_path, :class => 'btn btn-info' %>
 		<% else %>
 			<% (session[:last_search] ? back = session[:last_search] : back = openings_path) %>
 			<%= link_to 'Return to listing', back, :class => 'btn' %>
 		<% end %>
-		<% if !current_role(Graduate) %>
+		<% if !current_role(Member) %>
 			<%= link_to 'Edit', edit_opening_path(@opening), :class => 'btn btn-warning' %>
 		<% end %>
 
-		<% if current_role(Graduate) %>
+		<% if current_role(Member) %>
 			<%= render '/shared/set_fs_button_group', :obj => @opening, :sel => @selected_applications %>
 		<% end %>
 	</div>

@@ -35,9 +35,9 @@
           <td><%= user.email %></td>
           <td><%= role(user.role_type) %></td>
           <td>
-            <% if user.role_type == 'Graduate' %>
+            <% if user.role_type == 'Member' %>
               <%= (!@blank ? full_name(user.role) : "<span class='#{@mark}'>Incomplete profile</span>".html_safe ) %>
-            <% elsif user.role_type == 'Nonprofit' %>
+            <% elsif user.role_type == 'Employer' %>
               <%= (!@blank ? user.role.company : "<span class='#{@mark}'>Incomplete profile</span>".html_safe ) %>
             <% elsif user.role_type == 'Admin' %>
               <%= @admin %>

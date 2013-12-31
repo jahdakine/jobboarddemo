@@ -5,8 +5,8 @@ class UsersController < ApplicationController
   skip_before_filter :authenticate, only: [:new, :create]
   before_action :is_admin, only: [:index, :destroy]
 
-  #graduates listing
-  ### GET /graduates
+  #members listing
+  ### GET /members
   def index
     @users = User.all.includes(:role => :user)
   end
@@ -28,12 +28,12 @@ class UsersController < ApplicationController
     else
       @user = User.new(user_params)
       @user.skip_password = false
-      #Only graduates will be registering from the new form
-      @user.role = Graduate.new()
+      #Only members will be registering from the new form
+      @user.role = Member.new()
       if @user.save
         cookies[:auth_token] = @user.auth_token
         @user.send_registration_welcome if Rails.env.development?
-        redirect_to edit_graduate_path(@user.role_id),
+        redirect_to edit_member_path(@user.role_id),
         notice: "Thank you for registering - please complete your profile"
       else
         render "new"
@@ -46,11 +46,11 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     rtype = @user.role_type
     rid = @user.role.id
-    if rtype == 'Graduate'
-      @grad = Graduate.find(rid)
+    if rtype == 'Member'
+      @grad = Member.find(rid)
       @grad.destroy
-    elsif rtype == 'Nonprofit'
-      @np = Nonprofit.find(rid)
+    elsif rtype == 'Employer'
+      @np = Employer.find(rid)
       @np.destroy
     end
     redirect_to users_url, notice: "User successfully deleted."

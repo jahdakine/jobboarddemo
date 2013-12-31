@@ -2,10 +2,10 @@
 module UsersHelper
   def setup_users(user)
     @admin = ''
-    if user.role_type == 'Graduate'
+    if user.role_type == 'Member'
       @blank = user.role.first_name.blank?
       @extra = ''
-    elsif user.role_type == 'Nonprofit'
+    elsif user.role_type == 'Employer'
       @blank = user.role.company.blank?
       @extra = 'Continuing will remove all associated openings. '
     elsif user.role_type == 'Admin'

@@ -52,7 +52,7 @@ class InterestsController < ApplicationController
   private
     ##Use callbacks to share common setup or constraints between actions.
     #retreives the interest by requested parameter
-    #IF it is owned by the current NP OR current role is graduate AND it exists
+    #IF it is owned by the current NP OR current role is member AND it exists
     def set_interest
       pid = params[:id]
       if Interest.exists?(pid)

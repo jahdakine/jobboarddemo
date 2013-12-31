@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: nonprofits
+# Table name: employers
 #
 #  id             :integer          not null, primary key
 #  company        :string(50)
@@ -14,12 +14,12 @@
 #  zip_code       :string(10)
 #
 
-class Nonprofit < ActiveRecord::Base
+class Employer < ActiveRecord::Base
   has_one :user, :as => :role, dependent: :destroy
   has_many :openings, dependent: :destroy
-  #graduates-nonprofits join (favoriteds)
+  #members-employers join (favoriteds)
   has_many :favoriteds
-  has_many :graduates, :through => :favoriteds
+  has_many :members, :through => :favoriteds
 
   delegate :email, :created_at, :updated_at, :to => :user, :prefix => true
 

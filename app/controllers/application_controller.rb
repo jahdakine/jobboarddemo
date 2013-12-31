@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
     helper_method :current_user
     def current_role(role)
       @current_role =
-        current_user.role.is_a? (role) rescue redirect_to logout_url and return
+        current_user.role.is_a? (role) rescue redirect_to logout_url
     end
     helper_method :current_role
     def display_current_email
@@ -33,10 +33,10 @@ class ApplicationController < ActionController::Base
     helper_method :display_current_role
     def display_current_name
       cur_user = current_user.role
-      if current_role(Graduate)
+      if current_role(Member)
         @display_current_name =
           cur_user.first_name + " " + cur_user.last_name rescue ""
-      elsif current_role(Nonprofit)
+      elsif current_role(Employer)
         @display_current_name = cur_user.company rescue ""
       else
         @display_current_name = @display_current_email

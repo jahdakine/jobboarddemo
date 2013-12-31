@@ -16,17 +16,17 @@
   <%= prewrap_form('opening', 'City','map-marker', 'left') %>
   <%= f.text_field :city, :class => "textfield", :id => "opening-city" %>
   <%= postwrap_form('City is required') %>
-  <span id="opening-city-profile" class="hidden"><%= nonprofit.city %></span>
+  <span id="opening-city-profile" class="hidden"><%= employer.city %></span>
 
   <%= prewrap_form('opening', 'State','map-marker', 'left') %>
   <%= f.text_field :state, :class => "textfield", :id => "opening-state" %>
   <%= postwrap_form('State is required') %>
-  <span id="opening-state-profile" class="hidden"><%= nonprofit.state %></span>
+  <span id="opening-state-profile" class="hidden"><%= employer.state %></span>
 
   <%= prewrap_form('opening', 'Zip Code','map-marker', 'left') %>
   <%= f.text_field :zip_code, :class => "textfield", :id => "opening-zip_code" %>
   <%= postwrap_form('Zip Code is required') %>
-  <span id="opening-zip_code-profile" class="hidden"><%= nonprofit.zip_code %></span>
+  <span id="opening-zip_code-profile" class="hidden"><%= employer.zip_code %></span>
 
   <br>
   <%= button_to_function "Use Profile Address", 'fillAddr()', :class => "btn link2btn" %>
@@ -60,7 +60,7 @@
       </div>
     </div>
   </fieldset>
-  <%= hidden_field(:opening, :nonprofit_id, :value => user_id) %>
+  <%= hidden_field(:opening, :employer_id, :value => user_id) %>
   <br>
   <div class="btn-group">
     <%= f.submit "Save changes", :class => "btn", id: 'opening-submit' %>

@@ -7,13 +7,13 @@
 #  created_at      :datetime
 #  updated_at      :datetime
 #  openings_count  :integer          default(0)
-#  graduates_count :integer          default(0)
+#  members_count :integer          default(0)
 #
 
 class Interest < ActiveRecord::Base
-  #graduates-interests join (interested)
+  #members-interests join (interested)
   has_many :interesteds, dependent: :destroy
-  has_many :graduates, :through => :interesteds, :counter_cache => true
+  has_many :members, :through => :interesteds, :counter_cache => true
   #interests-openings join (categorization)
   has_many :categorizations, dependent: :destroy
   has_many :openings, :through => :categorizations, :counter_cache => true

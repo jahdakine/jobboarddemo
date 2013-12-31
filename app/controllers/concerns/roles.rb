@@ -5,15 +5,15 @@ module Roles
   included do
     ### class level code - before_filter ...
     #If the user is not a Grad, insuficient privs
-    def is_graduate
-      if !current_role(Graduate)
-        print "\n\nNot Graduate\n\n"
+    def is_member
+      if !current_role(Member)
+        print "\n\nNot Member\n\n"
         redirect_to logout_path, :alert => "Insufficient priviledges!"
       end
     end
     #If the user is not an NP, insuficient privs
-    def is_nonprofit
-      if !current_role(Nonprofit)
+    def is_employer
+      if !current_role(Employer)
         print "\n\nNot NP\n\n"
         redirect_to logout_path, :alert => "Insufficient priviledges!"
       end
@@ -27,7 +27,7 @@ module Roles
     end
     #If the user is not an Admin, or an NP, insuficient privs
     def is_admin_or_np
-      if current_role(Graduate)
+      if current_role(Member)
         print "\n\nNot NP or Admin\n\n"
         redirect_to logout_path, :alert => "Insufficient priviledges!"
       end
@@ -40,25 +40,25 @@ module Roles
     force = @user.force_reset
     reset = @user.password_reset_token
     rid = @user.role_id
-    if current_role(Graduate)
-      graduate = Graduate.find(rid)
-      if graduate.skip
+    if current_role(Member)
+      member = Member.find(rid)
+      if member.skip
         redirect_to openings_path,
           :notice => "Log in successful"
       else
-        redirect_to edit_graduate_path(graduate),
+        redirect_to edit_member_path(member),
           :notice => "Log in successful"
       end
-    elsif current_role(Nonprofit)
+    elsif current_role(Employer)
       if force
         redirect_to edit_password_reset_path(reset),
           alert: 'Please reset your temporary password'
       else
-        nonprofit = Nonprofit.find(rid)
-        if nonprofit.skip
+        employer = Employer.find(rid)
+        if employer.skip
           redirect_to openings_path, :notice => "Log in successful"
         else
-          redirect_to edit_nonprofit_path(nonprofit),
+          redirect_to edit_employer_path(employer),
             :notice => "Log in successful"
         end
       end

@@ -3,23 +3,23 @@
 	<div>
 		<%= display_formatted_address %>
 		<%= display_phone %>
-		Email: <%= mail_to @graduate.user_email, @graduate.user_email %>
+		Email: <%= mail_to @member.user_email, @member.user_email %>
 	</div>
 	<br>
 	</fieldset>
 	<fieldset class="nested-fieldset"><legend class="nested-legend">Volunteer Experience</legend>
 		<div>
-			<%= sanitized(@graduate.volunteer_experience)	%>
+			<%= sanitized(@member.volunteer_experience)	%>
 		</div>
 	</fieldset>
 	<fieldset class="nested-fieldset"><legend class="nested-legend">Work Experience</legend>
 		<div>
-			<%= sanitized(@graduate.work_experience) %>
+			<%= sanitized(@member.work_experience) %>
 		</div>
 	</fieldset>
-	<fieldset class="nested-fieldset"><legend class="nested-legend"><%= "Interest".pluralize(@graduate.interests.size) %></legend>
+	<fieldset class="nested-fieldset"><legend class="nested-legend"><%= "Interest".pluralize(@member.interests.size) %></legend>
 		<div>
-			<%= render '/shared/int_cat_chosen', :obj => @graduate %>
+			<%= render '/shared/int_cat_chosen', :obj => @member %>
 		</div>
 	</fieldset>
 	<br>

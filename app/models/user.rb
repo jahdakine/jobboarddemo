@@ -10,7 +10,7 @@
 #  auth_token             :string(255)
 #  password_reset_token   :string(255)
 #  password_reset_sent_at :datetime
-#  role_type              :string(20)       default("Graduate"), not null
+#  role_type              :string(20)       default("Member"), not null
 #  role_id                :integer          not null
 #  force_reset            :boolean          default(FALSE)
 #
@@ -106,9 +106,9 @@ number and one special character."
     stale_user_array = User.find(
       :all,
       :select=>"users.id",
-      :joins=>"JOIN graduates ON users.role_id = graduates.id",
+      :joins=>"JOIN members ON users.role_id = members.id",
       :conditions =>
-        "graduates.first_name is NULL AND users.created_at < '#{timespan}'"
+        "members.first_name is NULL AND users.created_at < '#{timespan}'"
     )
     User.delete_all(:id => stale_user_array)
   end

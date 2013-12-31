@@ -1,15 +1,15 @@
 	<div class="btn-group">
-		<%= link_to 'Return to listing', nonprofits_path, :class => 'btn btn-info' %>
+		<%= link_to 'Return to listing', employers_path, :class => 'btn btn-info' %>
 	</div>
 <fieldset>
-	<legend><%= @nonprofit.company || "Incomplete profile" %></legend>
+	<legend><%= @employer.company || "Incomplete profile" %></legend>
 	<h4>Location:</h4>
-	<div class="field"><%= @nonprofit.city %>, <%= @nonprofit.state %></div>
+	<div class="field"><%= @employer.city %>, <%= @employer.state %></div>
 	<h4>Email:</h4>
-	<div class="field"><%= mail_to @nonprofit.user_email, @nonprofit.user_email %></div>
+	<div class="field"><%= mail_to @employer.user_email, @employer.user_email %></div>
 
 	<h4>Description:</h4>
-	<div class="field"><%= sanitized(@nonprofit.description) %><div>
+	<div class="field"><%= sanitized(@employer.description) %><div>
 	<br>
 	<h4 class="center" id="openings-header">OPENINGS</h4>
 	<% if @openings.count > 0 %>
@@ -55,7 +55,7 @@
   	<p style="margin-top:10px;">None created.</p>
   <% end %>
 	<div class="btn-group">
-		<%= link_to 'Return to listing', nonprofits_path, :class => 'btn btn-info' %>
+		<%= link_to 'Return to listing', employers_path, :class => 'btn btn-info' %>
 	</div>
   <div class="right">
     <a href="javascript: window.location.reload()", class ="btn">Clear filter(s)</a>

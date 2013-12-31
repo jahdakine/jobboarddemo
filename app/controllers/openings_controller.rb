@@ -8,8 +8,8 @@ class OpeningsController < ApplicationController
   before_action :set_faved, only: [:index, :faved]
 
   before_action :is_admin_or_np, only: [:edit, :update, :destroy]
-  before_action :is_nonprofit, only: [:new, :create]
-  before_action :is_graduate, only: [:add, :remove, :saved, :faved]
+  before_action :is_employer, only: [:new, :create]
+  before_action :is_member, only: [:add, :remove, :saved, :faved]
   #all: [:index, :show]
 
   ###GET /opening
@@ -26,7 +26,7 @@ class OpeningsController < ApplicationController
       @selected_interests = []
       paramsPresent = false
     end
-    if current_role(Nonprofit)
+    if current_role(Employer)
       if paramsPresent
         @openings = Opening.find_by_sql([
           "SELECT openings.* FROM openings
@@ -34,7 +34,7 @@ class OpeningsController < ApplicationController
           LEFT JOIN interests ON interests.id = categorizations.interest_id
           WHERE 0=0
           AND interests.id IN (?)
-          AND nonprofit_id = ?
+          AND employer_id = ?
           GROUP BY openings.id",
           ints, cur_user
         ])
@@ -42,11 +42,11 @@ class OpeningsController < ApplicationController
         @openings = Opening.find_by_sql([
           "SELECT openings.* FROM openings
           WHERE 0=0
-          AND nonprofit_id = ?",
+          AND employer_id = ?",
           cur_user
         ])
       end
-    elsif current_role(Graduate)
+    elsif current_role(Member)
       @top5openings = Opening.find_by_sql(
         'SELECT views_count, id, position
         FROM openings
@@ -55,31 +55,31 @@ class OpeningsController < ApplicationController
       )
       if paramsPresent
         @openings = Opening.find_by_sql([
-          "SELECT openings.*, nonprofits.company, nonprofits.id as nid
+          "SELECT openings.*, employers.company, employers.id as nid
           FROM openings
           LEFT JOIN categorizations ON categorizations.opening_id = openings.id
-          INNER JOIN nonprofits ON openings.nonprofit_id = nonprofits.id
+          INNER JOIN employers ON openings.employer_id = employers.id
           LEFT JOIN interests ON interests.id = categorizations.interest_id
           WHERE 0=0
           AND interests.id IN (?)
           AND active = ?
           AND date_open < ?
           AND date_closed > ?
-          GROUP BY openings.id, nonprofits.company, nonprofits.id",
+          GROUP BY openings.id, employers.company, employers.id",
           ints, true, cur_time, cur_time
         ])
       else
         @openings = Opening.find_by_sql([
-          "SELECT openings.*, nonprofits.company, nonprofits.id as nid
+          "SELECT openings.*, employers.company, employers.id as nid
           FROM openings
           LEFT JOIN categorizations ON categorizations.opening_id = openings.id
-          INNER JOIN nonprofits ON openings.nonprofit_id = nonprofits.id
+          INNER JOIN employers ON openings.employer_id = employers.id
           LEFT JOIN interests ON interests.id = categorizations.interest_id
           WHERE 0=0
           AND active = ?
           AND date_open < ?
           AND date_closed > ?
-          GROUP BY openings.id, nonprofits.company, nonprofits.id",
+          GROUP BY openings.id, employers.company, employers.id",
           true, cur_time, cur_time
         ])
       end
@@ -92,14 +92,14 @@ class OpeningsController < ApplicationController
   ###GET /openings/1
   def show
     pid = params[:id]
-    @opening = Opening.includes(:nonprofit).find(pid)
+    @opening = Opening.includes(:employer).find(pid)
     @selected_interests = @opening.interests.to_a
     Opening.increment_counter :views_count, pid
-    if current_role(Graduate)
+    if current_role(Member)
       qry = Opening.find_by_sql([
         "SELECT openings.id FROM openings
         LEFT OUTER JOIN applications ON applications.opening_id = openings.id
-        WHERE applications.graduate_id = ?",
+        WHERE applications.member_id = ?",
         current_user.role_id
       ])
       @selected_applications = qry.collect(&:id)
@@ -110,7 +110,7 @@ class OpeningsController < ApplicationController
   def new
     @opening = Opening.new
     @selected_interests = []
-    @nonprofit = Nonprofit.find(current_user.role_id)
+    @employer = Employer.find(current_user.role_id)
   end
 
   ###POST /openings
@@ -120,7 +120,7 @@ class OpeningsController < ApplicationController
       redirect_to @opening, notice: 'Job opening successfully created.'
     else
       @selected_interests = params[:opening][:interest_ids] ||= []
-      @nonprofit = Nonprofit.find(current_user.role_id)
+      @employer = Employer.find(current_user.role_id)
       render 'new'
     end
   end
@@ -129,9 +129,9 @@ class OpeningsController < ApplicationController
   def edit
     @selected_interests = @opening.interest_ids.to_a.map!(&:to_s)
     if current_role(Admin)
-      @nonprofit = Nonprofit.find(@opening.nonprofit_id)
+      @employer = Employer.find(@opening.employer_id)
     else
-      @nonprofit = Nonprofit.find(current_user.role_id)
+      @employer = Employer.find(current_user.role_id)
     end
   end
 
@@ -142,7 +142,7 @@ class OpeningsController < ApplicationController
       redirect_to @opening, notice: 'Job opening successfully updated.'
     else
       @selected_interests = params[:opening][:interest_ids] ||= []
-      @nonprofit = Nonprofit.find(current_user.role_id)
+      @employer = Employer.find(current_user.role_id)
       render 'edit'
     end
   end
@@ -154,13 +154,13 @@ class OpeningsController < ApplicationController
   end
 
   ###Non-RESTful misc actions
-  #Graduate adds Opening to saved jobs list
+  #Member adds Opening to saved jobs list
   def add
     pid = params[:id]
     cur_user = current_user.role_id
-    if Graduate.find(cur_user)
+    if Member.find(cur_user)
       .applications
-      .create(:graduate_id=>cur_user, :opening_id=>pid)
+      .create(:member_id=>cur_user, :opening_id=>pid)
       flash[:notice] = 'Opening added to Saved Jobs!'
     else
       flash[:alert] = 'There was a problem adding opening to Saved Jobs.'
@@ -168,13 +168,13 @@ class OpeningsController < ApplicationController
     redirect_to opening_path(pid)
   end
 
-  #Graduate removes Opening from saved jobs list
+  #Member removes Opening from saved jobs list
   def remove
     pid = params[:id]
     @id = Application.find_by_sql([
       "SELECT id
       FROM applications
-      WHERE graduate_id = ?
+      WHERE member_id = ?
       AND opening_id = ?",
       current_user.role_id, pid
     ])
@@ -207,13 +207,13 @@ class OpeningsController < ApplicationController
     ###Use callbacks to share common setup or constraints between actions.
     #retreives the opening by requested parameter
     #IF it is owned by the current NP
-    #OR current role is graduate AND it exists
+    #OR current role is member AND it exists
     def set_opening
       pid = params[:id]
       if Opening.exists?(pid)
         @opening = Opening.find(pid)
-        if current_role(Nonprofit)
-          if @opening.nonprofit_id != current_user.role_id || !@opening
+        if current_role(Employer)
+          if @opening.employer_id != current_user.role_id || !@opening
             redirect_to openings_path, :alert => "Insufficient priviledges!"
           end
         end
@@ -226,13 +226,13 @@ class OpeningsController < ApplicationController
       @interests = Interest.all.order('name ASC')
     end
     def set_saved
-      @saved = Opening.includes(:applications, :nonprofit)
-        .where('applications.graduate_id = ?', current_user.role_id)
-        .references(:applications, :nonprofit)
+      @saved = Opening.includes(:applications, :employer)
+        .where('applications.member_id = ?', current_user.role_id)
+        .references(:applications, :employer)
     end
     def set_faved
-      @faved = Nonprofit.includes(:favoriteds)
-        .where('favoriteds.graduate_id = ?', current_user.role_id)
+      @faved = Employer.includes(:favoriteds)
+        .where('favoriteds.member_id = ?', current_user.role_id)
         .references(:favoriteds)
     end
     ###Never trust parameters from the scary internet,
@@ -247,7 +247,7 @@ class OpeningsController < ApplicationController
         :date_closed,
         :description,
         :position,
-        :nonprofit_id,
+        :employer_id,
         :interest_ids => []
       )
     end

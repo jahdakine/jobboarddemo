@@ -1,42 +1,42 @@
 <fieldset>
 	<legend>Update Profile</legend>
 	<%= display_note('agree') %>
-	<%= form_for(@graduate) do |f| %>
+	<%= form_for(@member) do |f| %>
 	  <%= render 'shared/error_messages', object: f.object %>
 
-	  <%= prewrap_form('graduate', 'First Name', 'user', 'left') %>
+	  <%= prewrap_form('member', 'First Name', 'user', 'left') %>
 	  <%= f.text_field :first_name, :class=>"form-control", :id=>"grad-first", :placeholder=>"First name", :autofocus=>"autofocus" %>
 	  <%= postwrap_form('First Name is required') %>
 
-	  <%= prewrap_form('graduate', 'Last Name','user', 'left') %>
+	  <%= prewrap_form('member', 'Last Name','user', 'left') %>
 	  <%= f.text_field :last_name, :class=>"textfield", :id=>"grad-last" %>
 	  <%= postwrap_form('Last Name is required') %>
 
 	  <br class="clear">
 
-	  <%= prewrap_form('graduate', 'Address 1','home') %>
+	  <%= prewrap_form('member', 'Address 1','home') %>
 	  <%= f.text_field :address_1, :class=>"textfield", :id=>"grad-addr1" %>
 	  <%= postwrap_form('') %>
 
-	  <%= prewrap_form('graduate', 'Address 2','home') %>
+	  <%= prewrap_form('member', 'Address 2','home') %>
 	  <%= f.text_field :address_2, :class=>"textfield", :id=>"grad-addr2" %>
 	  <%= postwrap_form('') %>
 
-	  <%= prewrap_form('graduate', 'City','home', 'left') %>
+	  <%= prewrap_form('member', 'City','home', 'left') %>
 	  <%= f.text_field :city, :class=>"textfield", :id=>"grad-city" %>
 	  <%= postwrap_form('') %>
 
-	  <%= prewrap_form('graduate', 'State','home', 'left') %>
+	  <%= prewrap_form('member', 'State','home', 'left') %>
 	  <%= f.text_field :state, :class=>"textfield", :id=>"grad-state" %>
 	  <%= postwrap_form('') %>
 
-	  <%= prewrap_form('graduate', 'Zip Code','home', 'left') %>
+	  <%= prewrap_form('member', 'Zip Code','home', 'left') %>
 	  <%= f.text_field :zip_code, :class=>"textfield", :id=>"grad-zip" %>
 	  <%= postwrap_form('') %>
 
 	  <br class="clear">
 
-	  <%= prewrap_form('graduate', 'Phone','bell') %>
+	  <%= prewrap_form('member', 'Phone','bell') %>
 	  <%= f.text_field :phone, :class=>"textfield", :id=>"grad-phone" %>
 	  <%= postwrap_form('Phone is required') %>
 
@@ -58,7 +58,7 @@
 	      <div class="<%= @span %>">
 	        <% @interests.each do |interest| %>
 	          <% @count += 1 %>
-	          <%= check_box_tag "graduate[interest_ids][]", interest.id, @selected_interests.include?(interest.id.to_s), :id=>dom_id(interest) %>
+	          <%= check_box_tag "member[interest_ids][]", interest.id, @selected_interests.include?(interest.id.to_s), :id=>dom_id(interest) %>
 	          <%= label_tag dom_id(interest), interest.name, :class=>'list-label' %><br>
 	          <% if @count % @num_in_cols == 0 %></div><div class="<%= @span %>"><% end %>
 	        <% end %>

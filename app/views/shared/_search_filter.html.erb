@@ -6,7 +6,7 @@
 	</div>
 
 	<div>
-		<span id="category" style="cursor: pointer; color: #0088cc;">Job <%= (params[:controller] == 'graduates' ? 'Interest' : 'Category' ) %></span> <i id="job-cat-icon" class="icon-chevron-down icon-offset-half"></i>
+		<span id="category" style="cursor: pointer; color: #0088cc;">Job <%= (params[:controller] == 'members' ? 'Interest' : 'Category' ) %></span> <i id="job-cat-icon" class="icon-chevron-down icon-offset-half"></i>
 		<% (!selected_interests.empty? ? disp = 'visible' : disp = 'none') %>
 		<div id="categories" style="display:<%= disp %>;margin: 0.25em 0 0.25em 1em;">
 		  <% interests.each do |interest| %>
@@ -15,7 +15,7 @@
 		  <% end %>
 		</div>
 	</div>
-	<% if params[:controller] != 'graduates' %>
+	<% if params[:controller] != 'members' %>
 		<div>
 			<span id="type" style="cursor: pointer; color: #0088cc;">Job Type</span> <i id="job-type-icon" class="icon-chevron-down icon-offset-half"></i>
 			<!-- TODO: add migration, no model -->

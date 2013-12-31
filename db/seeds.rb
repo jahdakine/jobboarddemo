@@ -3,11 +3,11 @@
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
 #
 # user1 = User.new(
-# 	:email => 'graduate1@example.com',
+# 	:email => 'member1@example.com',
 # 	:password => '123qweASD',
 # 	:password_confirmation => '123qweASD'
 # )
-# user1.role = Graduate.new(
+# user1.role = Member.new(
 # 	:first_name => "Rock",
 # 	:last_name => "Hudson",
 # 	:address_1 => "PO Box 12345",
@@ -22,11 +22,11 @@
 # user1.save!
 
 # user2 = User.new(
-# 	:email => 'nonprofit1@example.com',
+# 	:email => 'employer1@example.com',
 # 	:password => '123qweASD',
 # 	:password_confirmation => '123qweASD'
 # )
-# user2.role = Nonprofit.new(
+# user2.role = Employer.new(
 # 	:company => "Widgets, Inc.",
 # 	:description => 'Free widgets to the homeless',
 # )
@@ -37,7 +37,7 @@
 # 	:position => 'Rails programmer',
 # 	:date_open => Date.today,
 # 	:date_closed => Date.today + 30.days,
-# 	:nonprofit_id => user2.role_id,
+# 	:employer_id => user2.role_id,
 # 	:description => "Located in Mytown, Colorado, we are looking to build a 'Monster Job' board for Employers..."
 # )
 

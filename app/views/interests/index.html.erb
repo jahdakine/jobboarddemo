@@ -23,7 +23,7 @@
           <td>
             <div class="btn-group btn-group-xs">
               <%= link_to 'Show', interest, :class => "btn btn-mini btn-success" %>
-              <% if interest.graduates_count > 0 || interest.openings_count > 0 %>
+              <% if interest.members_count > 0 || interest.openings_count > 0 %>
                 <% warn = 'STRONG WARNING: Deleting or editing interests/categories associated with job seekers or job openings could cause confusion. ' %>
                 <% btn_type = 'btn-danger' %>
               <% else %>
@@ -35,7 +35,7 @@
             </div>
           </td>
           <td><%= interest.name %></td>
-          <td><span class="badge <%= (interest.graduates_count > 0 ? 'badge-info' : 'badge') %>"><%= interest.graduates_count %></span></td>
+          <td><span class="badge <%= (interest.members_count > 0 ? 'badge-info' : 'badge') %>"><%= interest.members_count %></span></td>
           <td><span class="badge <%= (interest.openings_count > 0 ? 'badge-info' : 'badge') %>"><%= interest.openings_count %></span></td>
           <td><%= interest.created_at.strftime('%m/%d/%Y') %></td>
           <td><%= interest.updated_at.strftime('%m/%d/%Y %I:%M %p') %></td>

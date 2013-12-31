@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe GraduatesController do
+describe MembersController do
 
   describe "GET 'index'" do
     it "returns http success" do

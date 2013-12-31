@@ -1,7 +1,7 @@
 var ready, asInitVals = [];
 
 ready = function() {
-	oTable = $('#dt-nonprofits').dataTable({
+	oTable = $('#dt-employers').dataTable({
 		bAutoWidth: false,
 		aaSorting: [[1, 'desc']],
 		aoColumns: [

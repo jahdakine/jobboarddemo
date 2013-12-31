@@ -13,20 +13,20 @@
     </tr>
   </thead>
   <tbody>
-    <% @faved.each do |nonprofit| %>
+    <% @faved.each do |employer| %>
       <tr>
         <td>
-          <%= link_to "#{nonprofit.company}",
-              {:controller => 'nonprofits',
+          <%= link_to "#{employer.company}",
+              {:controller => 'employers',
               :action => 'display',
-              :id => "#{nonprofit.id}"} %>
+              :id => "#{employer.id}"} %>
         </td>
-        <td><%= mail_to nonprofit.email %></td>
+        <td><%= mail_to employer.email %></td>
         <td>
           <span class="badge
-            <%= (nonprofit.openings_count > 0 ? 'badge-info' : 'badge') %>
+            <%= (employer.openings_count > 0 ? 'badge-info' : 'badge') %>
           ">
-            <%= nonprofit.openings_count %>
+            <%= employer.openings_count %>
           </span>
         </td>
       </tr>

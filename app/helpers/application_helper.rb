@@ -46,8 +46,8 @@ module ApplicationHelper
 
   #only needed for demo - translator
   def role(type)
-    role = 'Employer' if type == 'Nonprofit'
-    role = 'Job Seeker' if type == 'Graduate'
+    role = 'Employer' if type == 'Employer'
+    role = 'Job Seeker' if type == 'Member'
     role = 'Administrator' if type == 'Admin'
     return role
   end
@@ -247,14 +247,14 @@ expired.'
     end
     if params[:controller] == 'openings'
       #edit - less warning
-      if current_role(Nonprofit)
+      if current_role(Employer)
         edit = "<a href=\"#{edit_opening_path(opening)}\"
           id=\"edit\" class=\"btn btn-mini btn-warning\">Edit</a>"
       #no delete button if NP
       else
         delete = ''
       end
-    elsif params[:controller] == 'nonprofits'
+    elsif params[:controller] == 'employers'
       #edit - stern warning
       edit = "<a href=\"#{edit_opening_path(opening)}\"
         id=\"edit\" class=\"btn btn-mini btn-warning\"
