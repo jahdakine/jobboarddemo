@@ -3,6 +3,7 @@
   <div class="btn-group">
     <%= render '/shared/create_io_button', :role => Admin %>
   </div>
+  <%= hidden_field_tag "dLength", "#{@show_entries}" %>
 	<table class="datatables" id="dt-interest-users">
     <thead>
       <tr>

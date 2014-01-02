@@ -43,15 +43,19 @@ class EmployersController < ApplicationController
   #profile
   ###GET /employers/1/edit
   def edit
+    @user = @employer.user
+    @selected_number = @user.def_table_disp
   end
 
   #profile handler
   ###PATCH/PUT /members/1
   def update
-    if @employer.update(employer_params)
+    @user = @employer.user
+    if @employer.update(employer_params) && @user.update_attribute('def_table_disp', params[:def_table_disp])
       redirect_to edit_employer_path(@employer),
         notice: 'Profile successfully updated.'
     else
+      @selected_number = params[:def_table_disp] ||= 10
       render 'edit'
     end
   end

@@ -10,6 +10,7 @@ class ApplicationController < ActionController::Base
     def authenticate
       redirect_to login_url,
       alert: "Not authorized or session timed out" if !current_user
+      @show_entries = @current_user.def_table_disp ||= 25
     end
     def current_user
       token = cookies[:auth_token]
@@ -19,8 +20,7 @@ class ApplicationController < ActionController::Base
     end
     helper_method :current_user
     def current_role(role)
-      @current_role =
-        current_user.role.is_a? (role) rescue redirect_to logout_url
+      @current_role = current_user.role.is_a? (role)
     end
     helper_method :current_role
     def display_current_email

@@ -1,4 +1,5 @@
   <% (current_role(Member) ? id = 'dt-openings-grad' : id = 'dt-openings') %>
+  <%= hidden_field_tag "dLength", "#{@show_entries}" %>
   <table class="datatables" id="<%= id %>">
   <thead>
     <tr>

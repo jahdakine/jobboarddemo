@@ -1,6 +1,6 @@
-	<div class="btn-group">
-		<%= link_to 'Return to listing', employers_path, :class => 'btn btn-info' %>
-	</div>
+<div class="btn-group">
+	<%= link_to 'Return to listing', employers_path, :class => 'btn btn-info' %>
+</div>
 <fieldset>
 	<legend><%= @employer.company || "Incomplete profile" %></legend>
 	<h4>Location:</h4>
@@ -13,6 +13,7 @@
 	<br>
 	<h4 class="center" id="openings-header">OPENINGS</h4>
 	<% if @openings.count > 0 %>
+		<%= hidden_field_tag "dLength", "#{@show_entries}" %>
 		<table class="datatables" id="dt-openings">
 	    <thead>
 	      <tr>

@@ -3,16 +3,14 @@ var ready, asInitVals = [];
 ready = function() {
 	dLength = parseInt($("#dLength").val(), 10);
 
-	oTable = $('#dt-saved').dataTable({
+	oTable = $("#dt-members").dataTable({
 		bAutoWidth: false,
 		aaSorting: [[0, 'asc']],
 		iDisplayLength: dLength,
 		aLengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
 		aoColumns: [
-			{ sWidth: "30%" },
-			{ sWidth: "10%" },
-			{ sWidth: "10%" },
-			{ sWidth: "30%" },
+			{ sWidth: "40%" },
+			{ sWidth: "40%" },
 			{ sWidth: "10%" },
 			{ sWidth: "10%" },
 		],
@@ -29,16 +27,19 @@ ready = function() {
 			}
 		}
 	});
+
 	oTable.columnFilter({
 		aoColumns: [
 			{ type: "text" },
 			{ type: "text" },
-			{ type: "select" },
-			{ type: "text" },
 			{ type: "date-range" },
-			{ type: "date-range" }
+			{ type: "date-range" },
 		]
 	});
+
+	tinyMCE.init({
+    mode: 'textareas'
+  });
 };
 
 $(document).ready(ready);

@@ -29,10 +29,10 @@
 	    <%= f.text_area :description, :class => "textarea tinymce", :id => "np-desc" %>
 	  </div>
 	  <%= display_note('emp_desc') %>
-		<fieldset id="np-settings" class="nested-fieldset"><legend class="nested-legend">Default Preferences (Not yet implemented)</legend>
+		<fieldset id="np-settings" class="nested-fieldset"><legend class="nested-legend">Default Preferences</legend>
 	    <div class="field">
-	    	<%= label_tag :def_rows, "Number of rows to show in table listings", :class=>'list-label' %><br>
-				<%= select_tag :def_rows, options_for_select(TABLE_ROWS), :style=>'width:75px;' %>
+	    	<%= label_tag :def_table_disp, "Number of rows to show in table listings", :class=>'list-label' %><br>
+				<%= select_tag :def_table_disp, options_for_select(TABLE_ROWS, @selected_number), :style=>'width:75px;' %>
 	    </div>
 	  </fieldset>
 	  <hr>

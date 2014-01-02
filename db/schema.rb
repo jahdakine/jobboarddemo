@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131231000738) do
+ActiveRecord::Schema.define(version: 20140102185605) do
 
   create_table "admins", force: true do |t|
     t.datetime "created_at"
@@ -131,6 +131,7 @@ ActiveRecord::Schema.define(version: 20131231000738) do
     t.string   "role_type",                          default: "Member", null: false
     t.integer  "role_id",                                               null: false
     t.boolean  "force_reset",                        default: false
+    t.integer  "def_table_disp",                     default: 10
   end
 
   add_index "users", ["role_type", "role_id"], name: "index_users_on_role_id", unique: true, using: :btree

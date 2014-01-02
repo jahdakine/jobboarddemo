@@ -76,10 +76,10 @@
 	      <%= label_tag :saved_private, "Keep my saved jobs private", :class=>'list-label' %>
 	    </div>
 	  </fieldset>
-		<fieldset id="grad-settings" class="nested-fieldset"><legend class="nested-legend">Default Preferences (Not yet implemented)</legend>
+		<fieldset id="grad-settings" class="nested-fieldset"><legend class="nested-legend">Default Preferences</legend>
 	    <div class="field">
-	    	<%= label_tag :def_rows, "Number of rows to show in table listings", :class=>'list-label' %><br>
-				<%= select_tag :def_rows, options_for_select(TABLE_ROWS), :style=>'width:75px;' %>
+	    	<%= label_tag :def_table_disp, "Number of rows to show in table listings", :class=>'list-label' %><br>
+				<%= select_tag :def_table_disp, options_for_select(TABLE_ROWS, @selected_number), :style=>'width:75px;' %>
 	    </div>
 	  </fieldset>
 	  <hr>

@@ -5,6 +5,7 @@
       <fieldset class="nested-fieldset">
         <legend class="nested-legend">Instructions</legend>
         <%= display_note('filter') %>
+        <%= hidden_field_tag "dLength", "#{@show_entries}" %>
         <table class="datatables" id="dt-members">
           <thead>
             <tr>

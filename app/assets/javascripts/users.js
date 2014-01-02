@@ -1,10 +1,14 @@
 var ready;
 
 ready = function() {
+	dLength = parseInt($("#dLength").val(), 10);
+
 	oTable = $("#dt-users").dataTable({
 		bAutoWidth: false,
 		//Makes 2nd column default DESC
 		aaSorting: [[1, 'desc']],
+		iDisplayLength: dLength,
+		aLengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
 		aoColumns: [
 			{bSortable: false, bSearchable: false, sWidth: "10%"},
 			{bSortable: true, bSearchable: true, sWidth: "5%"},
@@ -13,7 +17,19 @@ ready = function() {
 			{bSortable: true, bSearchable: true, sWidth: "30%"},
 			{bSortable: true, bSearchable: true, sWidth: "10%"},
 			{bSortable: true, bSearchable: true, sWidth: "10%"},
-		]
+		],
+		fnInitComplete: function() {
+			/* auto change settings if it has fewer than 10 rows */
+			var oListSettings = this.fnSettings();
+			var wrapper = this.parent();
+
+			if (oListSettings.fnRecordsTotal() < 10) {
+				$('.dataTables_paginate', wrapper).hide();
+				$('.dataTables_filter', wrapper).hide();
+				$('.dataTables_info', wrapper).hide();
+				$('.dataTables_length', wrapper).hide();
+			}
+		}
 	});
 
 	oTable.columnFilter({
@@ -32,7 +48,7 @@ ready = function() {
 	$('#password').keyup(function() {
 		checkStrength($('#password').val());
 	});
-	
+
 	function checkStrength(password) {
 		var strength = 0;
 		//over 7 chars, but cant be all alpha

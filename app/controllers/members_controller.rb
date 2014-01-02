@@ -33,17 +33,21 @@ class MembersController < ApplicationController
   #profile
   def edit
     @selected_interests = @member.interest_ids.to_a.map!(&:to_s)
+    @user = @member.user
+    @selected_number = @user.def_table_disp
   end
 
   #profile handler
   ### PATCH/PUT /members/1
   def update
     params[:member][:interest_ids] ||= [] #if no boxes are checked
-    if @member.update(member_params)
+    @user = @member.user
+    if @member.update(member_params) && @user.update_attribute('def_table_disp', params[:def_table_disp])
       redirect_to edit_member_path(@member),
         notice: 'Profile successfully updated.'
     else
-      @selected_interests = params[:member][:interest_ids] ||= []
+      @selected_number = params[:def_table_disp] ||= []
+      @selected_interests = params[:member][:interest_ids] ||= 10
       render 'edit'
     end
   end

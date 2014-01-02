@@ -1,3 +1,4 @@
+
 <fieldset>
   <legend><%= (current_role(Member) ? 'Search' : 'Manage') %> Job Openings</legend>
   <div class="row-fluid">
@@ -24,7 +25,7 @@
                   <li><%= link_to job.position, opening_path(job.id) %></li>
                 <% end %>
                 <% if @saved.count > 5 %>
-                  <i class="icon-list"></i> <%= link_to "More", "/saved", :class => 'more' %>
+                  <i class="icon-list"></i> <%= link_to "More", "/saved", :class=>'more' %>
                 <% end %>
               <% else %>
                 <li>None</li>
@@ -38,10 +39,10 @@
             <ul class="small-text">
               <% if @faved.count > 0  %>
                 <% @faved.limit(5).each do |employer| %>
-                  <li><%= link_to "#{employer.company}", {:controller => 'employers', :action => 'display', :id => "#{employer.id}"} %></li>
+                  <li><%= link_to "#{employer.company}", {:controller=>'employers', :action=>'display', :id=>"#{employer.id}"} %></li>
                 <% end %>
                 <% if @faved.count > 5 %>
-                  <i class="icon-list"></i> <%= link_to "More", "/faved", :class => 'more' %>
+                  <i class="icon-list"></i> <%= link_to "More", "/faved", :class=>'more' %>
                 <% end %>
               <% else %>
                 <li>None</li>
@@ -58,13 +59,13 @@
           <%= display_note('filter') %>
           <% if current_role(Employer) %>
             <div class="btn-group">
-              <%= link_to 'Create new opening', new_opening_path, :class => 'btn btn-primary' %>
+              <%= link_to 'Create new opening', new_opening_path, :class=>'btn btn-primary' %>
             </div>
           <%   end %>
-          <%= render 'table', :openings => @openings %>
+          <%= render 'table', :openings=>@openings %>
           <% if current_role(Employer) %>
             <div class="btn-group">
-              <%= link_to 'Create new opening', new_opening_path, :class => 'btn btn-primary' %>
+              <%= link_to 'Create new opening', new_opening_path, :class=>'btn btn-primary' %>
             </div>
           <% end %>
           <% if !current_role(Member) %>
@@ -73,8 +74,8 @@
       </fieldset>
     </div>
     <div class="span2">
-      <%= form_tag openings_path, :method => 'get' do %>
-        <%= render 'shared/search_filter', :interests => @interests, :selected_interests => @selected_interests %>
+      <%= form_tag openings_path, :method=>'get' do %>
+        <%= render 'shared/search_filter', :interests=>@interests, :selected_interests=>@selected_interests %>
       <% end %>
     </div>
   </div>

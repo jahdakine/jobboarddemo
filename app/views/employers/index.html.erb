@@ -6,6 +6,7 @@
     <%= link_to 'Return to menu', admins_path, :class => 'btn btn-info' %>
   </div>
   <br>
+  <%= hidden_field_tag "dLength", "#{@show_entries}" %>
   <table class="datatables" id="dt-employers">
     <thead>
       <tr>
